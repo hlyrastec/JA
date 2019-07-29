@@ -1,0 +1,41 @@
+<html>
+ <head>
+ <% include ../../partials/head %>
+ <link rel="stylesheet" type="text/css" href="/stylesheets/chat.css">
+ <script src="/socket.io/socket.io.js"></script>
+ </head>
+ <body>
+  <div class="container">
+  <header>
+   <a href="/"><img src="/images/favicon.png" class="favicon"></a>
+  </header>
+  <span id="user-id" hidden><%= user.id %></span>
+  <span id="user-name" hidden><%= user.name %></span>
+  <span id="user-support" hidden><%= user.support %></span>
+  <span id="access-room" hidden><%= room %></span>
+  <section>
+    <% if(serviceDesk=='opened'){ %>
+    <div class="box-1" id='serviceDesk-box'>
+      <h4 class='underline-generic'>Caso tenha solucionado o problema feche o chamado.</h4>
+      <div class="menu-box">
+        <span class='span-menu' onclick="closeServiceDesk()">Fechar chamado</span>
+      </div>
+    </div>
+    <% } %>
+   <div class="container chat-containner">
+    <div class="box-1">
+      <form id="chat-frm">
+        <div class="box-1 chat-box" id="chat-box"></div>
+        <input type="text" class="chat-input" id="chat-message" maxlength="1000" autocomplete="off">
+        <button type="submit" class="chat-btn">Enviar</button>
+      </form>
+    </div>
+   </div>
+  </section>
+  </div>
+ </body>
+ <footer>
+ <% include ../../partials/footer %>
+  <script src="/javascripts/sockets/support.js"></script>
+ </footer>
+</html>

@@ -1,0 +1,27 @@
+<html>
+	<head>
+        <% include ../partials/head %>
+	</head>
+	<body>
+		<header>
+			<a href="/"><img src="/images/favicon.png" class="favicon"></a>
+			<div>
+    			<a onclick="let r = confirm('deseja sair?');if(r==true){window.location.href='/logout'}">Logout</a>
+			</div>
+		</header>
+		<section>
+			<div class="container">
+				<div class="box-2">
+                    <div class="menu-box">
+                        <strong class="underline-title">Ferramentas de loja</strong>
+                        <span class="span-menu" onclick="window.location.href='/store/cashier'">Caixa</span>
+                        <span class="span-menu" onclick="window.location.href='/store/sales'">Vendas</span>
+                    </div>
+                </div>
+			</div>
+		</section>
+	</body>
+	<footer>
+        <% include ../partials/footer %>
+	</footer>
+</html>
