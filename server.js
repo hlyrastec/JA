@@ -44,6 +44,8 @@ app.use(function(req, res, next) {
   res.render('error');
 });
 
-server.listen(3001, () => {
-	console.log('server listening on port 3000');
+var port = process.env.PORT || 3000;
+
+server.listen(port, () => {
+	console.log('it is time!');
 });
