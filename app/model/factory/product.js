@@ -82,4 +82,24 @@ Product.removeImage = async (id) => {
 	return db(query);
 };
 
+Product.addType = async (type) => {
+	let query = "INSERT INTO lfsdb.product_type (name, shortcut) VALUES ('"+type.name+"','"+type.shortcut+"');";
+	return db(query);
+};
+
+Product.addColor = async (color) => {
+	let query = "INSERT INTO lfsdb.product_color (name, shortcut) VALUES ('"+color.name+"','"+color.shortcut+"');";
+	return db(query);
+};
+
+Product.getTypes = async () => {
+	let query = "SELECT * FROM lfsdb.product_type;";
+	return db(query);
+};
+
+Product.getColors = async () => {
+	let query = "SELECT * FROM lfsdb.product_color;";
+	return db(query);
+};
+
 module.exports = Product;

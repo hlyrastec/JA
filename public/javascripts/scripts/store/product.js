@@ -1,10 +1,10 @@
 var cashier_product_array = [];
 
 $(() => {
-	$('#main-product-tbl').on('click', '#store-product-show-btn', function(){
+	$('#main-product-tbl').on('click', '#cashier-product-show-btn', function(){
 		let btn = $(this);btn.css('pointerEvents', 'none');
 		let rowEl = $(this).closest('tr');
-		let cod = rowEl.find('#src_product_cod').text();
+		let cod = rowEl.find('#cashier-product-cod').text();
 		
 		$.ajax({
 			url: '/store/product/show',

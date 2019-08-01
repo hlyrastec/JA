@@ -9,6 +9,10 @@ $(function(){
 		let size = document.getElementById('product_size').value;
 		let value = document.getElementById('product_value').value;
 
+		if(isNaN(value) || value < 0 || value > 999){
+			return alert('O valor do produto é inválido!');	
+		};
+
 		$.ajax({
 			url: '/factory/product/save',
 			method: 'post',
@@ -242,6 +246,50 @@ $(function(){
 			}
 		});
 	});
+
+	$("#product-type-save-btn").on('click', function(){
+		let type_name = document.getElementById('product-type-name').value
+		let type_shortcut = document.getElementById('product-type-shortcut').value
+		$.ajax({
+			url: '/factory/product/addType',
+			method: 'post',
+			data: {
+				type_name: type_name,
+				type_shortcut: type_shortcut
+			},
+			success: function(response){
+				if(response.unauthorized){
+					alert(response.unauthorized);
+					window.location.href = '/login';
+					return;
+				};
+
+				alert(response.done);
+			}
+		});
+	});
+
+	$("#product-color-save-btn").on('click', function(){
+		let color_name = document.getElementById('product-color-name').value
+		let color_shortcut = document.getElementById('product-color-shortcut').value
+		$.ajax({
+			url: '/factory/product/addColor',
+			method: 'post',
+			data: {
+				color_name: color_name,
+				color_shortcut: color_shortcut
+			},
+			success: function(response){
+				if(response.unauthorized){
+					alert(response.unauthorized);
+					window.location.href = '/login';
+					return;
+				};
+
+				alert(response.done);
+			}
+		});
+	});
 });
 
 function hideProduct(){
@@ -330,5 +378,85 @@ function productRemoveImage(id){
 				alert(response.done);
 			}
 		});
+	};
+};
+
+function getProductTypes(){
+	$.ajax({
+		url: '/factory/product/getTypes',
+		method: 'get',
+		success: (response) => {
+			var html = "";
+			response.types.forEach((type) => {
+				html += "<option value='"+type.shortcut+"'>"+type.name+"</option>";
+			});
+			document.getElementById('product_type').innerHTML = html;
+		}
+	});
+};
+
+function getProductColors(){
+	$.ajax({
+		url: '/factory/product/getColors',
+		method: 'get',
+		success: (response) => {
+			var html = "";
+			response.colors.forEach((color) => {
+				html += "<option value='"+color.shortcut+"'>"+color.name+"</option>";
+			});
+			document.getElementById('product_color').innerHTML = html;
+		}
+	});
+};
+
+
+function displayProductCreateFrm(){
+	let productForm = document.getElementById("product-create-frm");
+	if(productForm.style.display == "none"){
+		getProductTypes();
+		getProductColors();
+		productForm.style.display = "block";	
+	} else if(productForm.style.display == "block"){
+		productForm.style.display = "none";	
+	};
+};
+
+function getProductSelectTypes(){
+	$.ajax({
+		url: '/factory/product/getTypes',
+		method: 'get',
+		success: (response) => {
+			var html = "";
+			response.types.forEach((type) => {
+				html += "<option value='"+type.shortcut+"'>"+type.name+"</option>";
+			});
+			document.getElementById('get-product-type').innerHTML = html;
+		}
+	});
+};
+
+function getProductSelectColors(){
+	$.ajax({
+		url: '/factory/product/getColors',
+		method: 'get',
+		success: (response) => {
+			var html = "";
+			response.colors.forEach((color) => {
+				html += "<option value='"+color.shortcut+"'>"+color.name+"</option>";
+			});
+			document.getElementById('get-product-color').innerHTML = html;
+		}
+	});
+};
+
+
+function displayProductSelectFrm(){
+	let productForm = document.getElementById("product-select-frm");
+	if(productForm.style.display == "none"){
+		getProductSelectTypes();
+		getProductSelectColors();
+		productForm.style.display = "block";	
+	} else if(productForm.style.display == "block"){
+		productForm.style.display = "none";	
 	};
 };

@@ -27,7 +27,7 @@ $(function(){
 		document.getElementById("cashier-product-add-btn").disabled = true;
 
 		let product_cod = document.getElementById('cashier-product-select').value;
-		let product_amount = document.getElementById('cashier-product-amount-select').value;
+		let product_amount = parseInt(document.getElementById('cashier-product-amount-select').value);
 		
 		if(product_cod!='' && product_cod!='0'){
 			// continue;
@@ -82,15 +82,15 @@ $(function(){
 				
 				let html = "<tr>";
 				html += "<td id='cashier-product-id' hidden>"+ product.id +"</td>";
-				html += "<td id='src_product_cod' hidden>"+product.cod+"</td>";
-				html += "<td><a id='store-product-show-btn'>"+product.cod+"</a></td>";
+				html += "<td id='cashier-product-cod' hidden>"+product.cod+"</td>";
+				html += "<td><a id='cashier-product-show-btn'>"+product.cod+"</a></td>";
 				html += "<td id='cashier-product-info'>"+ product.type +" | "+ product.name +" | "+ product.color +" | "+ product.size +"</td>";
 				html += "<td id='cashier-product-amount-remove-btn'><a>-</a></td>";
 				html += "<td id='cashier-product-amount'>"+ product.amount +"</td>";
 				html += "<td id='cashier-product-amount-add-btn'><a>+</a></td>";
 				html += "<td id='cashier-product-value'>"+ product.value +"</td>";
 				html += "<td id='cashier-product-total_value'>"+ product.total_value +"</td>";
-				html += "<td><a id='cashier-product-remove-btn'>Remove</a></td>";
+				html += "<td><a id='cashier-product-remove-btn'>rem</a></td>";
 				html += "</tr>";
 
 				product_tbody.innerHTML += html;
@@ -124,15 +124,16 @@ $(function(){
 	$('table').on('click', '#cashier-product-amount-add-btn', function(){
 		let rowEl = $(this).closest('tr');
 		let product_id = rowEl.find('#cashier-product-id').text();
+		let product_cod = rowEl.find('#cashier-product-cod').text();
 
 		$.ajax({
 			url: '/store/product/get',
 			method: 'post',
-			data: { product_id: product_id },
+			data: { product_cod: product_cod },
 			success: function(response){
 				if(response.product[0].amount>=parseInt(rowEl.find('#cashier-product-amount').text())+1){
 					for(i in cashier_product_array){
-						if(product_id == cashier_product_array[i].id){
+						if(product_cod == cashier_product_array[i].cod){
 							cashier_product_array[i].total_value = cashier_product_array[i].value * (parseInt(rowEl.find('#cashier-product-amount').text()) + 1);
 							rowEl.find('#cashier-product-total_value').text(cashier_product_array[i].total_value);
 						};
@@ -289,14 +290,14 @@ function printCashierSale(sale){
 
 	html += "<table border=1 cellspacing=0 cellpadding=2 style='text-align:center;width:100%;font-size:12px;'>";
 	html += "<tr>";
-	html += "<td>Data: "+ sale.full_date +"</td>";
-	html += "<td>Cliente: "+ sale.customer_name +"</td>";
-	html += "<td>CPF: "+ sale.customer_cpf +"</td>";
+	html += "<td>Cód:"+ sale.id +"</td>";
+	html += "<td>Cliente: "+ sale.customer_name+"</td>";
+	html += "<td>CPF: "+ sale.customer_cpf+"</td>";
 	html += "</tr>";
 	html += "<tr>";
-	html += "<td>Pag: "+ sale.payment_method +"</td>";
-	html += "<td>Parc: "+ sale.payment_installment +"</td>";
-	html += "<td>Vendedor: "+ sale.user +"</td>";
+	html += "<td>Data: "+ sale.full_date+"</td>";
+	html += "<td>Pag: "+ sale.payment_method+" | "+ sale.payment_installment+"x</td>";
+	html += "<td>Vendedor: "+ sale.user+"</td>";
 	html += "</tr>";
 	html += "</table>";
 

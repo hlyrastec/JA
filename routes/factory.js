@@ -17,5 +17,9 @@ router.post('/product/filter', productController.filter);
 router.post('/product/remove', productController.remove);
 router.post('/product/addImage', productController.addImage);
 router.post('/product/removeImage', productController.removeImage);
+router.post('/product/addType', productController.addType);
+router.get('/product/getTypes', productController.getTypes);
+router.post('/product/addColor', productController.addColor);
+router.get('/product/getColors', productController.getColors);
 
 module.exports = router;

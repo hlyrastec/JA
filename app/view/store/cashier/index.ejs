@@ -12,33 +12,27 @@
 		<section>
 			<div class="container">
                 <div class="box-3">
-					<div class="box-1">
-						<form id="product-form-filter">
-							<select id="get-type" class="btn-generic-small">
-								<option value="">Tipo</option>
-								<option value="colete">Colete</option>
-								<option value="peça_mod">Peça modular</option>
-								<option value="coldre">Coldre</option>
-								<option value="bornal">Bornal</option>
-							</select>
-							<select id="get-color" class="btn-generic-small">
-								<option value="">Cor</option>
-								<option value="pt">Preto</option>
-								<option value="vd">Verde</option>
-								<option value="tan">Tan</option>
-								<option value="cpt">Camo preto</option>
-								<option value="cvd">Camo verde</option>
-							</select>
-							<button type="submit" class="btn-generic-small">Filtrar</button>
-	                  	</form>
-	                </div>
-					<div class="box-1">
-					    <select id="cashier-product-select" class="btn-generic-medium" name="product">
-					      <option value="">Produto</option>
-					    </select>
-					    <input type="number" id="cashier-product-amount-select" class="btn-generic-small" placeholder="Quantidade">
-					    <input type="button" id="cashier-product-add-btn" class="btn-generic-small" value="Adicionar">
-					</div>
+                	<button class="btn-generic-big" onclick="displayProductSelectFrm()">Filtro de produtos</button>
+					<div class="box-1" id="product-select-frm" style="display:none">
+						<div class="box-1">
+							<form id="product-form-filter">
+								<select id="get-product-type" class="btn-generic-small">
+									<option value="">Tipo</option>
+								</select>
+								<select id="get-product-color" class="btn-generic-small">
+									<option value="">Cor</option>
+								</select>
+								<button type="submit" class="btn-generic-small">Filtrar</button>
+		                  	</form>
+		                </div>
+						<div class="box-1">
+						    <select id="cashier-product-select" class="btn-generic-medium" name="product">
+						      <option value="">Produto</option>
+						    </select>
+						    <input type="number" id="cashier-product-amount-select" class="btn-generic-small" placeholder="Quantidade">
+						    <input type="button" id="cashier-product-add-btn" class="btn-generic-small" value="Adicionar">
+						</div>
+                	</div>
                 </div>
 
                 <div class="box-3">
