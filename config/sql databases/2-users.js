@@ -13,3 +13,11 @@ CREATE TABLE `lfsdb`.`users` (
   UNIQUE INDEX `id_UNIQUE` (`id` ASC),
   UNIQUE INDEX `email_UNIQUE` (`email` ASC),
   UNIQUE INDEX `username_UNIQUE` (`username` ASC));
+
+// EXAMPLE OF CHAT ROOM TABLE
+CREATE TABLE `lfsdb`.`room1` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `user` VARCHAR(45) NOT NULL,
+  `message` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC));

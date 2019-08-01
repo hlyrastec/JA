@@ -2,8 +2,8 @@
 module.exports = {
     'connection': {
         'host': 'localhost',
-        'user': 'root',
-        'password': 'root123!@'
+        'user': 'hlyrastec',
+        'password': 'root1234'
     },
 	'database': 'lfsdb'
 };
