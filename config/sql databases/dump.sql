@@ -50,34 +50,6 @@ INSERT INTO `factory_product` VALUES (3,1,'Close','Colete','pt','P',0,150.00),(4
 UNLOCK TABLES;
 
 --
--- Table structure for table `online_sale`
---
-
-DROP TABLE IF EXISTS `online_sale`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `online_sale` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `cod` varchar(45) NOT NULL,
-  `customer_name` varchar(45) NOT NULL,
-  `customer_username` varchar(45) NOT NULL,
-  `date` varchar(45) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `id_UNIQUE` (`id`),
-  UNIQUE KEY `cod_UNIQUE` (`cod`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `online_sale`
---
-
-LOCK TABLES `online_sale` WRITE;
-/*!40000 ALTER TABLE `online_sale` DISABLE KEYS */;
-/*!40000 ALTER TABLE `online_sale` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `product_color`
 --
 
@@ -268,7 +240,7 @@ DROP TABLE IF EXISTS `store_customer`;
 CREATE TABLE `store_customer` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
-  `cpf` varchar(11) DEFAULT NULL,
+  `cpf` varchar(11) NOT NULL,
   `phone` varchar(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
@@ -366,7 +338,7 @@ CREATE TABLE `store_sale_product` (
   `value` decimal(8,2) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=67 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -375,7 +347,6 @@ CREATE TABLE `store_sale_product` (
 
 LOCK TABLES `store_sale_product` WRITE;
 /*!40000 ALTER TABLE `store_sale_product` DISABLE KEYS */;
-INSERT INTO `store_sale_product` VALUES (1,'1',3,2,150.00),(2,'2',3,1,150.00),(3,'2',6,1,150.00),(4,'2',7,1,150.00),(5,'2',8,2,180.00),(6,'2',25,1,180.00),(7,'2',17,1,180.00),(8,'2',18,1,180.00),(9,'3',3,1,150.00),(10,'3',6,1,150.00),(11,'3',7,1,150.00),(12,'3',8,2,180.00),(13,'3',25,2,180.00),(14,'3',17,1,180.00),(15,'3',18,1,180.00),(16,'4',3,1,150.00),(17,'4',6,1,150.00),(18,'4',7,2,150.00),(19,'4',8,2,180.00),(20,'4',25,2,180.00),(21,'4',17,1,180.00),(22,'4',18,1,180.00),(23,'5',3,1,150.00),(24,'5',6,6,150.00),(25,'5',7,2,150.00),(26,'5',8,2,180.00),(27,'5',25,2,180.00),(28,'5',17,1,180.00),(29,'5',18,1,180.00),(30,'6',6,4,150.00),(31,'6',8,1,180.00),(32,'7',26,3,40.00),(33,'7',3,2,150.00),(34,'7',7,1,150.00),(35,'7',4,2,150.00),(36,'7',11,3,150.00),(37,'7',12,4,150.00),(38,'7',9,5,180.00),(39,'8',3,1,150.00),(40,'8',6,2,150.00),(41,'8',7,3,150.00),(42,'9',6,26,150.00),(43,'9',7,3,150.00),(44,'10',26,1,40.00),(45,'11',4,5,150.00),(46,'12',3,1,150.00),(47,'12',6,12,150.00),(48,'12',7,11,150.00),(49,'12',8,4,180.00),(50,'12',17,8,180.00),(51,'13',3,100,150.00),(52,'14',6,3,150.00),(53,'14',3,3,150.00),(54,'15',6,6,150.00),(55,'16',3,1,150.00),(56,'17',3,3,150.00),(57,'17',6,1,150.00),(58,'17',7,1,150.00),(59,'17',8,1,180.00),(60,'17',25,1,180.00),(61,'18',3,33,150.00),(62,'19',26,25,40.00),(63,'20',26,16,40.00),(64,'21',3,1,150.00),(65,'21',6,1,150.00),(66,'21',7,1,150.00);
 /*!40000 ALTER TABLE `store_sale_product` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -410,7 +381,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'ADMIN','Desenvolvedor','hlyrastec@gmail.com','04/11/1994','ADMIN','$2a$10$0dD64MBT2VMTxAe/UKc6kel2iWykAxP/lK8piRkp8pPg1OlOFr8P6','dvp','disconnected','closed'),(2,'Jean Carvalho','Proprietário','assistentejario@gmail.com','01/janeiro/2000','jeancarvalho','$2a$10$tSdiXkF9QCCt.km3zIqx2u3jF2j6WLXFcWFzzGs6hVlER9ewQYgjG','prp','disconnected','closed'),(3,'Henrique Lyra','Suporte','hhlyras2011@gmail.com','4/Novembro/1994','hlyras','$2a$10$tSdiXkF9QCCt.km3zIqx2u3jF2j6WLXFcWFzzGs6hVlER9ewQYgjG','spt','disconnected','opened'),(4,'Daniel Anderson','Gerente Fábrica','danielanderson@gmail.com','12/Agosto/1992','danielanderson','$2a$10$tSdiXkF9QCCt.km3zIqx2u3jF2j6WLXFcWFzzGs6hVlER9ewQYgjG','grf','disconnected','closed');
+INSERT INTO `users` VALUES (1,'ADMIN','Desenvolvedor','hlyrastec@gmail.com','04/11/1994','ADMIN','$2a$10$mKGr7f4jkacBEGaW1/whgOgC.7hNsSxGo/zaxW8ctAnkxrK2jSIYS','dvp','disconnected','closed'),(2,'Jean Carvalho','Proprietário','assistentejario@gmail.com','01/janeiro/2000','jeancarvalho','$2a$10$tSdiXkF9QCCt.km3zIqx2u3jF2j6WLXFcWFzzGs6hVlER9ewQYgjG','prp','disconnected','closed'),(3,'Henrique Lyra','Suporte','hhlyras2011@gmail.com','4/Novembro/1994','hlyras','$2a$10$tSdiXkF9QCCt.km3zIqx2u3jF2j6WLXFcWFzzGs6hVlER9ewQYgjG','spt','disconnected','closed'),(4,'Daniel Anderson','Gerente Fábrica','danielanderson@gmail.com','12/Agosto/1992','danielanderson','$2a$10$tSdiXkF9QCCt.km3zIqx2u3jF2j6WLXFcWFzzGs6hVlER9ewQYgjG','grf','disconnected','closed');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -423,4 +394,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-08-03 16:46:36
+-- Dump completed on 2019-08-04 14:22:58
