@@ -1,7 +1,7 @@
 $(function(){
 	$("#product-save-btn").on('click', function(){
 		let btn = $(this);btn.attr('disabled', true);
-		let id = document.getElementById('product_id').value;
+		let id = document.getElementById('product_id').value.replace(/^\s+|\s+$/g, '');
 		let cod = parseInt(document.getElementById('product_cod').value.replace(/^\s+|\s+$/g, ''));
 		let name = document.getElementById('product_name').value.replace(/^\s+|\s+$/g, '');
 		let type = document.getElementById('product_type').value;
@@ -397,11 +397,15 @@ function getProductTypes(){
 		method: 'get',
 		success: (response) => {
 			var html = "";
+			html += "<option value=''>Categoria</option>";
 			response.types.forEach((type) => {
 				html += "<option value='"+type.shortcut+"'>"+type.name+"</option>";
 			});
 			if(document.getElementById('product_type')){
 				document.getElementById('product_type').innerHTML = html;
+			};
+			if(document.getElementById('src-product-type')){
+				document.getElementById('src-product-type').innerHTML = html;
 			};
 			if(document.getElementById('src_product_type')){
 				document.getElementById('src_product_type').innerHTML = html;
@@ -416,13 +420,17 @@ function getProductColors(){
 		method: 'get',
 		success: (response) => {
 			var html = "";
+			html += "<option value=''>Cor</option>";
 			response.colors.forEach((color) => {
 				html += "<option value='"+color.shortcut+"'>"+color.name+"</option>";
 			});
-			if(document.getElementById('product_color').innerHTML){
+			if(document.getElementById('product_color')){
 				document.getElementById('product_color').innerHTML = html;
 			};
-			if(document.getElementById('src_product_color').innerHTML){
+			if(document.getElementById('src-product-color')){
+				document.getElementById('src-product-color').innerHTML = html;
+			};
+			if(document.getElementById('src_product_color')){
 				document.getElementById('src_product_color').innerHTML = html;
 			};
 		}
@@ -469,40 +477,11 @@ function displayProductFilterFrm(){
 	};
 };
 
-function getProductSelectTypes(){
-	$.ajax({
-		url: '/factory/product/getTypes',
-		method: 'get',
-		success: (response) => {
-			var html = "";
-			response.types.forEach((type) => {
-				html += "<option value='"+type.shortcut+"'>"+type.name+"</option>";
-			});
-			document.getElementById('src-product-type').innerHTML = html;
-		}
-	});
-};
-
-function getProductSelectColors(){
-	$.ajax({
-		url: '/factory/product/getColors',
-		method: 'get',
-		success: (response) => {
-			var html = "";
-			response.colors.forEach((color) => {
-				html += "<option value='"+color.shortcut+"'>"+color.name+"</option>";
-			});
-			document.getElementById('src-product-color').innerHTML = html;
-		}
-	});
-};
-
-
 function displayProductSelectFrm(){
 	let productForm = document.getElementById("product-select-frm");
 	if(productForm.style.display == "none"){
-		getProductSelectTypes();
-		getProductSelectColors();
+		getProductTypes();
+		getProductColors();
 		productForm.style.display = "block";	
 	} else if(productForm.style.display == "block"){
 		productForm.style.display = "none";	

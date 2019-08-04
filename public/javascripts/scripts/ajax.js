@@ -1,10 +1,16 @@
 $(function(){
 	// Simple Ajax model
 	$("#object-function-btn").on("click", function(event){
+		let btn = $(this);btn.attr('disabled', true);
+		let rowEl = $(this).closest('tr');
+		let obj_cod = rowEl.find('#obj-cod').text();
+
 		$.ajax({
 			url: '/object/function',
 			method: 'post',
-			data: {},
+			data: {
+				obj_cod: obj_cod
+			},
 			success: function(response){
 				if(response.unauthorized){
 					alert(response.unauthorized);
@@ -14,7 +20,7 @@ $(function(){
 
 				if(response.msg){
 					alert(response.msg);
-					document.getElementById("create-sale-btn").disabled = false;
+					btn.attr('disabled', false);
 					return;
 				};
 
@@ -23,13 +29,16 @@ $(function(){
 		})
 	});
 
+	// Table button
 	$("#object-function-table").on("click", "object-function-btn", function(event){
-		let rowEl = $(this).closest('tr');
-		rowEl.find('#object-function-btn').css('pointerEvents', 'none');
+		let btn = $(this);btn.css('pointerEvents', 'none');
+
 		$.ajax({
 			url: '/object/function',
 			method: 'post',
-			data: {},
+			data: {
+				obj_cod: obj_cod
+			},
 			success: function(response){
 				if(response.unauthorized){
 					alert(response.unauthorized);
@@ -39,7 +48,7 @@ $(function(){
 
 				if(response.msg){
 					alert(response.msg);
-					rowEl.find('#object-function-btn').css('pointerEvents', 'auto');
+					btn.css('pointerEvents', 'auto');
 					return;
 				};
 

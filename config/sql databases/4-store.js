@@ -14,7 +14,7 @@ CREATE TABLE `lfsdb`.`store_product` (
 CREATE TABLE `lfsdb`.`store_customer` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
-  `cpf` VARCHAR(11) NULL,
+  `cpf` VARCHAR(11) NOT NULL,
   `phone` VARCHAR(11) NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC),

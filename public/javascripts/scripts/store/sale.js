@@ -126,6 +126,7 @@ $(function(){
 		let id = rowEl.find('#store-sale-id').text();
 
 		showStoreSale(id);
+		btn.css('pointerEvents', 'auto');
 	});
 });
 
@@ -156,13 +157,13 @@ function showStoreSale(id){
 			html += "<td>Cód:"+response.sale[0].id+"</td>";
 			html += "<td>Cliente: "+response.sale[0].customer_name+"</td>";
 			html += "<td>CPF: "+response.sale[0].customer_cpf+"</td>";
-			html += "<td>CPF: "+response.sale[0].customer_cpf+"</td>";
+			html += "<td>Status: "+response.sale[0].status+"</td>";
 			html += "</tr>";
 			html += "<tr>";
 			html += "<td>Data: "+response.sale[0].date+"</td>";
 			html += "<td>Pag: "+response.sale[0].payment_method+" | "+ response.sale[0].payment_installment+"x</td>";
+			html += "<td>Valor: "+response.sale[0].final_value+"</td>";
 			html += "<td>Vendedor: "+ response.sale[0].user+"</td>";
-			html += "<td>Status: "+response.sale[0].status+"</td>";
 			html += "</tr>";
 
 			html += "<br><br>";
