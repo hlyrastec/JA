@@ -29,7 +29,6 @@ $(function(){
 
 				alert(response.done);
 				clearCashier();
-
 				printCashierSale(response.sale);
 
 				document.getElementById("cashier-sale-save-btn").disabled = false;
