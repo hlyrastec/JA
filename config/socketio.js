@@ -9,7 +9,7 @@ module.exports = function(io) {
 			socket.room = user.room;
 
 			await User.supportConnect(socket.user_id);
-			console.log('user '+socket.user_name+' has connected!');
+			// console.log('user '+socket.user_name+' has connected!');
 			
 			socket.join(socket.room, async () => {
 				socket.broadcast.to(socket.room).emit('new user', socket.user_name+' entrou na sala.');
@@ -31,7 +31,7 @@ module.exports = function(io) {
 				});
 
 				socket.on('disconnect', async () => {
-					console.log('user '+socket.user_name+' has disconnected!');
+					// console.log('user '+socket.user_name+' has disconnected!');
 					
 					socket.broadcast.to(socket.room).emit('user left', socket.user_name+' saiu da sala.');
 					await User.supportDisconnect(socket.user_id);
