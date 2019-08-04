@@ -62,7 +62,7 @@ User.supportDisconnect = (id) => {
 };
 
 User.saveMessage = (data, room) => {
-	let query = "INSERT INTO lfsdb.room"+room+" (user, message) VALUES ('"+data.user+"', '"+data.message+"');";
+	let query = "INSERT INTO lfsdb.room"+room+" (user, full_date, message) VALUES ('"+data.user+"', '"+data.full_date+"', '"+data.message+"');";
 	return db(query);
 };
 

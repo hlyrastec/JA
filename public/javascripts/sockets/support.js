@@ -9,7 +9,7 @@ let chatBox = document.getElementById('chat-box');
 
 function renderMessage(data){
 	document.getElementById('chat-box')
-		.innerHTML += "<div class='chat-message'><p class='user-name'>"+data.user+" "+lib.genFullDate()+"</p>\
+		.innerHTML += "<div class='chat-message'><p class='user-name'>"+data.user+" "+data.full_date+"</p>\
 					   <p class='user-message'>"+data.message+"</p></div>";
 };
 
@@ -58,6 +58,7 @@ if(user.support == 'disconnected'){
 
 		if(inputMessage.length) {
 			var data = {
+				full_date: lib.genFullDate(),
 				user: user.name,
 				message: inputMessage
 			};

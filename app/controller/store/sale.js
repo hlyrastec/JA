@@ -9,13 +9,13 @@ const Sale = require('../../model/store/sale');
 
 const saleController = {
 	index: async (req, res) => {
-		if(!await userController.verifyAccess(req, res, ['vds','cxs','prp','grf','cof','dvp','spt','aaf'])){
+		if(!await userController.verifyAccess(req, res, ['dvp','prp','spt','grf','grl','crd','cxl'])){
 			return res.redirect('/login');
 		};
 		res.render('store/sale/index');
 	},
 	save: async (req, res) => {
-		if(!await userController.verifyAccess(req, res, ['vds','cxs','prp','grf','cof','dvp','spt','aaf'])){
+		if(!await userController.verifyAccess(req, res, ['dvp','prp','spt','grf','grl','crd','cxl','vdl','vde'])){
 			return res.send({ unauthorized: "Usuário não autorizado."});
 		};
 
@@ -68,33 +68,7 @@ const saleController = {
 		res.send({ done: 'Venda cadastrada!', sale: sale });
 	},
 	get: async (req, res) => {
-		if(!await userController.verifyAccess(req, res, ['prp','grf','cof','dvp','spt'])){
-			return response.send({ unauthorized: "Usuário não autorizado."});
-		};
-
-		let product = await Product.findByCod(req.body.product_cod);
-		res.send({ product: product });		
-	},
-	filter: async (req, res) => {
-		if(!await userController.verifyAccess(req, res, ['vds','cxs','prp','grf','cof','dvp','spt','aaf'])){
-			return res.send({ unauthorized: "Usuário não autorizado."});
-		};
-
-		const sale = {
-			customer_cpf: req.body.customer_cpf,
-			date: req.body.sale_date
-		};
-
-		let sales = await Sale.filter(sale);
-
-		if(sales.length < 1){
-			return res.send({ msg: 'Não foram encontrados resultados.' });
-		};
-
-		res.send({ sales: sales });
-	},
-	print: async (req, res) => {
-		if(!await userController.verifyAccess(req, res, ['vds','cxs','prp','grf','cof','dvp','spt','aaf'])){
+		if(!await userController.verifyAccess(req, res, ['dvp','prp','spt','grf','grl','crd','cxl','vdl','vde','etf','etl','aaf','aal'])){
 			return res.send({ unauthorized: "Usuário não autorizado."});
 		};
 
@@ -110,6 +84,24 @@ const saleController = {
 		};
 
 		res.send({ sale: sale, products: sale.products });
+	},
+	filter: async (req, res) => {
+		if(!await userController.verifyAccess(req, res, ['dvp','prp','spt','grf','grl','crd','cxl','vdl','vde','etf','etl','aaf','aal'])){
+			return res.send({ unauthorized: "Usuário não autorizado."});
+		};
+
+		const sale = {
+			customer_cpf: req.body.customer_cpf,
+			date: req.body.sale_date
+		};
+
+		let sales = await Sale.filter(sale);
+
+		if(sales.length < 1){
+			return res.send({ msg: 'Não foram encontrados resultados.' });
+		};
+
+		res.send({ sales: sales });
 	}
 };
 

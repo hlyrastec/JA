@@ -4,14 +4,14 @@ const Jobs = require('../model/job');
 
 const adminController = {
 	index: async (req, res) => {
-		if(!await userController.verifyAccess(req, res, ['prp','dvp','spt'])){
+		if(!await userController.verifyAccess(req, res, ['dvp','prp','spt','grf','grl','crd'])){
 			return res.redirect('/login');
 		};
 
 		res.render('admin/index');
 	},
 	updateUserAccess: async (req, res) => {
-		if(!await userController.verifyAccess(req, res, ['prp','dvp'])){
+		if(!await userController.verifyAccess(req, res, ['dvp'])){
 			return res.send({ unauthorized: "Usuário não autorizado."});
 		};
 		let user = {
@@ -48,7 +48,7 @@ const adminController = {
 
 		let users = await User.list();
 
-		res.render('admin/support/index', {users: users});
+		res.render('admin/support/index', { users: users });
 	},
 	// open the support chat page of a specific user
 	supportChat: async (req, res) => {

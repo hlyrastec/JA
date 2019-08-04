@@ -36,12 +36,12 @@ Sale.saveProducts = async (product) => {
 Sale.findById = async (id) => {
 	let query = "SELECT * FROM lfsdb.store_sale WHERE id='"+ id +"';";
 	return db(query);
-}
+};
 
 Sale.findProductsById = async (id) => {
 	let query = "SELECT * FROM lfsdb.store_sale_product WHERE sale_id='"+ id +"';";
 	return db(query);
-}
+};
 
 Sale.filter = async (sale) => {
 	if(sale.customer_cpf && sale.date){
@@ -54,7 +54,7 @@ Sale.filter = async (sale) => {
 		var query = "SELECT * FROM lfsdb.store_sale ORDER BY id DESC;";
 	};
 	return db(query);
-}
+};
 
 
 module.exports = Sale;

@@ -6,34 +6,12 @@
 		<header>
 			<a href="/"><img src="/images/favicon.png" class="favicon"></a>
 			<div>
-    			<a onclick="let r = confirm('deseja sair?');if(r==true){window.location.href='/logout'}">Logout</a>
+    			<a onclick="let r = confirm('deseja sair?');if(r==true){window.location.href='/logout'}">Sair</a>
 			</div>
 		</header>
 		<section>
 			<div class="container">
-                <div class="box-3">
-                	<button class="btn-generic-big" onclick="displayProductSelectFrm()">Filtro de produtos</button>
-					<div class="box-1" id="product-select-frm" style="display:none">
-						<div class="box-1">
-							<form id="product-form-filter">
-								<select id="get-product-type" class="btn-generic-small">
-									<option value="">Tipo</option>
-								</select>
-								<select id="get-product-color" class="btn-generic-small">
-									<option value="">Cor</option>
-								</select>
-								<button type="submit" class="btn-generic-small">Filtrar</button>
-		                  	</form>
-		                </div>
-						<div class="box-1">
-						    <select id="cashier-product-select" class="btn-generic-medium" name="product">
-						      <option value="">Produto</option>
-						    </select>
-						    <input type="number" id="cashier-product-amount-select" class="btn-generic-small" placeholder="Quantidade">
-						    <input type="button" id="cashier-product-add-btn" class="btn-generic-small" value="Adicionar">
-						</div>
-                	</div>
-                </div>
+                
 
                 <div class="box-3">
 					<div class="box-1">
@@ -45,7 +23,7 @@
 					</div>
 					<div id="search-customer-box" class="box-1" style="display:none">
 						<!-- <input type="text" class="btn-generic-big" id="src-customer-name" placeholder="Nome"> -->
-						<input type="text" class="btn-generic-big" id="src-customer-cpf" placeholder="CPF">
+						<input type="text" class="btn-generic-big" id="src-customer-cpf" placeholder="CPF" maxlength="11">
 						<input type="button" class="btn-generic-big" id="search-customer-btn" value="Buscar">
 					</div>
 					<div id="create-customer-box" class="box-1" style="display:none">
@@ -57,6 +35,7 @@
 				</div>
 
 				<div class="box-3">
+					<strong>Informações da Venda</strong>
 					<div class="box-1">
 						<select class="btn-generic-big" id="store-sale-customer">
 							<option value=''>Cliente</option>
@@ -87,7 +66,33 @@
 					</div>
 				</div>
 
+                <div class="box-3">
+	                	<button class="btn-generic-big" onclick="displayProductSelectFrm()">Filtro de produtos</button>
+						<div class="box-1" id="product-select-frm" style="display:none">
+							<div class="box-1">
+								<form id="product-form-filter">
+									<input type="text" id="src-product-cod" class="btn-generic-small" placeholder="Cód" autocomplete="off">
+									<select id="src-product-type" class="btn-generic-small">
+										<option value="">Tipo</option>
+									</select>
+									<select id="src-product-color" class="btn-generic-small">
+										<option value="">Cor</option>
+									</select>
+									<button type="submit" class="btn-generic-small">Filtrar</button>
+			                  	</form>
+			                </div>
+							<div class="box-1">
+							    <select id="cashier-product-select" class="btn-generic-medium" name="product">
+							      <option value="">Produto</option>
+							    </select>
+							    <input type="number" id="cashier-product-amount-select" class="btn-generic-small" placeholder="Quantidade">
+							    <input type="button" id="cashier-product-add-btn" class="btn-generic-small" value="Adicionar">
+							</div>
+	                	</div>
+	                </div>
+
                 <div class="box-2">
+                	<strong>Produtos da Venda</strong>
                 	<div class="box-1">
 						<table id="main-product-tbl" class="tbl-generic">
 							<tr>
@@ -129,9 +134,11 @@
                 		</table>
                 	</div>
             		<div class="box-1">
-            			<input type="button" id="cashier-sale-save-btn" class="btn-generic-big" value="Finalizar venda">
+            			<input type="button" id="cashier-sale-save-btn" class="btn-generic-big" style="background-color:#9bedbf;color:black;" value="Finalizar venda">
             		</div>
                 </div>
+
+                
                 <div class="box-1" id="product-show-box" style="display:none;">
 					<table class="tbl-info" id="product-show-tbl">
 						<tr>

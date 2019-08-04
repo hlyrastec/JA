@@ -5,7 +5,7 @@ const Customer = require('../../model/store/customer');
 
 const customerController = {
 	save: async (req, res) => {
-		if(!await userController.verifyAccess(req, res, ['vds','cxs','prp','grf','cof','dvp','spt','aaf'])){
+		if(!await userController.verifyAccess(req, res, ['dvp','prp','spt','grf','grl','crd','cxl','vdl','vde'])){
 			return res.send({ unauthorized: "Usuário não autorizado."});
 		};
 
@@ -27,7 +27,7 @@ const customerController = {
 		res.send({ done: 'Cliente cadastrado com sucesso!', customer: customer });
 	},
 	findByCpf: async (req, res) => {
-		if(!await userController.verifyAccess(req, res, ['vds','cxs','prp','grf','cof','dvp','spt','aaf'])){
+		if(!await userController.verifyAccess(req, res, ['dvp','prp','spt','grf','grl','crd','cxl','vdl','vde'])){
 			return res.send({ unauthorized: "Usuário não autorizado."});
 		};
 

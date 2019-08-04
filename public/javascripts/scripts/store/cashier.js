@@ -192,6 +192,23 @@ function updateCashier(){
 	document.getElementById('cashier-final').innerHTML = Cashier.final;
 };
 
+function clearCashier(){
+	Cashier.discount = 0;
+	Cashier.total = 0;
+	Cashier.final = 0;
+	cashier_product_array = [];
+
+	document.getElementById('store-sale-customer').innerHTML = "<option value=''>Cliente</option>";
+	document.getElementById('store-sale-payment-method').value = "";
+	document.getElementById('store-sale-payment-installment').value = "1";
+
+	document.getElementById('main-product-tbl-tbody').innerHTML = "";
+
+	document.getElementById('cashier-discount-update-value').value = "";
+
+	updateCashier();
+};
+
 function printCashierSale(sale){
 	var html = "<div style='display:inline-block;text-align:center;page-break-inside:avoid;page-break-after:auto;border-top:1px solid black;border-bottom:1px solid black;width:650px;margin-right:15px;padding:10px;'>";
 	// html += "<img src='JAicon.png'><br>"

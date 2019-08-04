@@ -74,7 +74,7 @@ $(function(){
 		let day = document.getElementById('day').value;
 		let month = document.getElementById('month').value;
 		let year = document.getElementById('year').value;
-		let user_email = document.getElementById('email').value;
+		let user_email = document.getElementById('email').value.replace(/^\s+|\s+$/g, '');
 
 		user_birth = ""+day+"/"+month+"/"+year;
 

@@ -6,7 +6,7 @@
 		<header>
 			<a href="/"><img src="/images/favicon.png" class="favicon"></a>
 			<div>
-    			<a onclick="let r = confirm('deseja sair?');if(r==true){window.location.href='/logout'}">Logout</a>
+    			<a onclick="let r = confirm('deseja sair?');if(r==true){window.location.href='/logout'}">Sair</a>
 			</div>
 		</header>
 		<section>
@@ -34,6 +34,11 @@
                     <button id="salePrevious" autocomplete="off" disabled>&lsaquo;&lsaquo;</button>
                     <span id="salePageNumber"></span>
                     <button id="saleNext" autocomplete="off" disabled>&rsaquo;&rsaquo;</button>
+                </div>
+                <div class="box-1" id="sale-show-box" style="display:none;">
+                    <table class="tbl-info" id="sale-show-tbl">
+                        <tbody id="sale-show-tbody"></tbody>
+                    </table>
                 </div>
 			</div>
 		</section>

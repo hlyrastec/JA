@@ -3,14 +3,15 @@ const Product = require('../../model/store/product');
 const Jobs = require('../../model/job');
 
 const productController = {
+	// create storage
 	index: async (req, res) => {
-		if(!await userController.verifyAccess(req, res, ['prp','grf','cof','dvp','spt','aaf'])){
+		if(!await userController.verifyAccess(req, res, ['dvp'])){
 			return res.redirect('/login');
 		};
 		res.render('store/product/index');
 	},
 	save: async (req, res) => {
-		if(!await userController.verifyAccess(req, res, ['grf','dvp'])){
+		if(!await userController.verifyAccess(req, res, ['dvp','grl','grf','crd'])){
 			return res.send({ unauthorized: "Usuário não autorizado."});
 		};
 
@@ -36,7 +37,7 @@ const productController = {
 		res.send({ done: 'Produto cadastrado com sucesso!', product: createdProduct });
 	},
 	list: async (req, res) => {
-		if(!await userController.verifyAccess(req, res, ['prp','grf','cof','dvp','spt'])){
+		if(!await userController.verifyAccess(req, res, ['dvp','prp','spt','grf','grl','crd','cxl','vdl','vde','etf','etl'])){
 			return res.send({ unauthorized: "Usuário não autorizado."});
 		};
 
@@ -44,7 +45,7 @@ const productController = {
 		res.send({ products: products });	
 	},
 	get: async (req, res) => {
-		if(!await userController.verifyAccess(req, res, ['prp','grf','cof','dvp','spt'])){
+		if(!await userController.verifyAccess(req, res, ['dvp','prp','spt','grf','grl','crd','cxl','vdl','vde','etf','etl','aaf','aal'])){
 			return res.send({ unauthorized: "Usuário não autorizado."});
 		};
 
@@ -54,17 +55,21 @@ const productController = {
 		res.send({ product: product });
 	},
 	filter: async (req, res) => {
-		if(!await userController.verifyAccess(req, res, ['prp','grf','cof','dvp','spt'])){
+		if(!await userController.verifyAccess(req, res, ['dvp','prp','spt','grf','grl','crd','cxl','vdl','vde','etf','etl','aaf','aal'])){
 			return res.send({ unauthorized: "Usuário não autorizado."});
 		};
 
-		const product = {
-			type: req.body.product_type,
-			color: req.body.product_color
+		if(req.body.product_cod){
+			let product = await Product.findByCod(req.body.product_cod);
+			res.send({ products: product });
+		} else {
+			const product = {
+				type: req.body.product_type,
+				color: req.body.product_color
+			};
+			let products = await Product.filter(product);
+			res.send({ products: products });
 		};
-
-		let products = await Product.filter(product);
-		res.send({ products: products });
 	}
 };
 

@@ -9,7 +9,7 @@ passport.serializeUser(async (user, done) => {
 });
 
 passport.deserializeUser(async (id, done) => {
-    const query = "SELECT * FROM users WHERE id = '"+id+"';";
+    const query = "SELECT * FROM users WHERE id='"+id+"';";
     let user = await db(query);
     done(null, user[0]);
 });
@@ -47,7 +47,7 @@ passport.use(
             newUserMysql.id = result.insertId;
             
             //creating chat to acess suport
-            const createChat = "CREATE TABLE lfsdb.room"+newUserMysql.id+" (id INT NOT NULL AUTO_INCREMENT, user VARCHAR(45) NOT NULL, message VARCHAR(255) NOT NULL, PRIMARY KEY (id), UNIQUE INDEX id_UNIQUE (id ASC));";
+            const createChat = "CREATE TABLE lfsdb.room"+newUserMysql.id+" (id INT NOT NULL AUTO_INCREMENT, full_date VARCHAR(45) NOT NULL, user VARCHAR(45) NOT NULL, message VARCHAR(255) NOT NULL, PRIMARY KEY (id), UNIQUE INDEX id_UNIQUE (id ASC));";
             await db(createChat);
             
             return done(null, req.user);

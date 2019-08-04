@@ -2,8 +2,8 @@ $(function(){
 	$("#product-save-btn").on('click', function(){
 		let btn = $(this);btn.attr('disabled', true);
 		let id = document.getElementById('product_id').value;
-		let cod = document.getElementById('product_cod').value;
-		let name = document.getElementById('product_name').value;
+		let cod = parseInt(document.getElementById('product_cod').value.replace(/^\s+|\s+$/g, ''));
+		let name = document.getElementById('product_name').value.replace(/^\s+|\s+$/g, '');
 		let type = document.getElementById('product_type').value;
 		let color = document.getElementById('product_color').value;
 		let size = document.getElementById('product_size').value;
@@ -45,8 +45,6 @@ $(function(){
 				document.getElementById('product_id').value = "";
 				document.getElementById('product_cod').value = "";
 				document.getElementById('product_name').value = "";
-				document.getElementById('product_type').value = "";
-				document.getElementById('product_color').value = "";
 				document.getElementById('product_size').value = "";
 				document.getElementById('product_value').value = "";
 				btn.attr('disabled', false);
@@ -56,13 +54,19 @@ $(function(){
 
 	$("#product-filter-btn").on('click', function(){
 		let btn = $(this);btn.attr('disabled', true);
+		let cod = document.getElementById('src_product_cod').value.replace(/^\s+|\s+$/g, '');
 		let type = document.getElementById('src_product_type').value;
 		let color = document.getElementById('src_product_color').value;
+
+		if(isNaN(cod) || cod < 0 || cod > 9999){
+			cod = "";
+		};
 
 		$.ajax({
 			url: '/factory/product/filter',
 			method: 'post',
 			data: { 
+				product_cod: cod,
 				product_type: type,
 				product_color: color
 			},
@@ -83,8 +87,7 @@ $(function(){
 					    for (let i = page * pageSize; i < products.length && i < (page + 1) * pageSize;i++){
 							html += "<tr>";
 							html += "<td id='src_product_id' hidden>"+products[i].id+"</td>";
-							html += "<td id='src_product_cod' hidden>"+products[i].cod+"</td>";
-							html += "<td><a id='product-show-btn'>"+products[i].cod+"</a></td>";
+							html += "<td><a onclick='showProduct("+products[i].cod+")'>"+products[i].cod+"</a></td>";
 							html += "<td id='src_product_type'>"+products[i].type+"</td>";
 							html += "<td id='src_product_name'>"+products[i].name+"</td>";
 							html += "<td id='src_product_size'>"+products[i].size+"</td>";
@@ -138,7 +141,7 @@ $(function(){
 		let rowEl = $(this).closest('tr');
 
 		let id = rowEl.find('#src_product_id').text();
-		let cod = rowEl.find('#src_product_cod').text();
+		let cod = parseInt(rowEl.find('#src_product_cod').text());
 		let name = rowEl.find('#src_product_name').text();
 		let type = rowEl.find('#src_product_type').text();
 		let color = rowEl.find('#src_product_color').text();
@@ -156,100 +159,15 @@ $(function(){
 		btn.css('pointerEvents', 'auto');
 	});
 
-	$('#main-product-tbl').on('click', '#product-show-btn', function(){
-		let btn = $(this);btn.css('pointerEvents', 'none');
-		let rowEl = $(this).closest('tr');
-		let cod = rowEl.find('#src_product_cod').text();
-
-		$.ajax({
-			url: '/factory/product/show',
-			method: 'post',
-			data: { 
-				product_cod: cod
-			},
-			success: function(response){
-				if(response.unauthorized){
-					alert(response.unauthorized);
-					window.location.href = '/login';
-					return;
-				};
-
-				// document.getElementById('product-show-tbody').innerHTML = "";
-				let html = "";
-				html += "<tr>";
-				html += "<td>"+response.product[0].cod+"</td>";
-				html += "<td>"+response.product[0].type+"</td>";
-				html += "<td>"+response.product[0].name+"</td>";
-				html += "<td>"+response.product[0].size+"</td>";
-				html += "<td>"+response.product[0].color+"</td>";
-				html += "<td>"+response.product[0].amount+"</td>";
-				html += "<td>"+response.product[0].value+"</td>";
-				html += "<td><a onclick='productAddImage("+response.product[0].id+")'>add img</a></td>";
-				html += "<td><a onclick='hideProduct()'>Esconder</a></td>";
-				html += "</tr>";
-
-				document.getElementById('product-show-tbody').innerHTML = html;
-				document.getElementById('product-show-box').style.display = 'block';
-
-				if(response.product[0].images.length){
-					let pageSize = 1;
-					let page = 0;
-					let images = response.product[0].images;
-
-					function paging(){
-						let htmlImage = "";
-						
-					    for (let i = page * pageSize; i < images.length && i < (page + 1) * pageSize;i++){
-							htmlImage += "<img src='"+response.product[0].images[i].url+"' style='width:500px;height:500px;'>";
-							htmlImage += "<div clas='box-1'>"
-							htmlImage += "<br>"
-							htmlImage += "<button class='btn-generic-big' onclick='productRemoveImage("+response.product[0].images[i].id+")'>Excluir</button>";
-							htmlImage += "</div>"
-						};
-
-						document.getElementById('product-show-image').innerHTML = htmlImage;
-						document.getElementById('product-show-image').style.display = 'block';
-						
-					    $('#imagePageNumber').text('' + (page + 1) + ' de ' + Math.ceil(images.length / pageSize));
-					};
-
-					btn.attr('disabled', false);
-
-					function saleButtonsPaging(){
-					    $('#imageNext').prop('disabled', images.length <= pageSize || page >= images.length / pageSize - 1);
-					    $('#imagePrevious').prop('disabled', images.length <= pageSize || page == 0);
-					};
-
-					$(function(){
-					    $('#imageNext').click(function(){
-					        if(page < images.length / pageSize - 1){
-					            page++;
-					            paging();
-					            saleButtonsPaging();
-					        };
-					    });
-					    $('#imagePrevious').click(function(){
-					        if(page > 0){
-					            page--;
-					            paging();
-					            saleButtonsPaging();
-					        };
-					    });
-					    paging();
-					    saleButtonsPaging();
-					});
-				} else {
-					document.getElementById('product-show-image').innerHTML = "SEM IMAGENS";
-					// document.getElementById('product-show-image').style.display = 'none';
-				};
-				btn.css('pointerEvents', 'auto');
-			}
-		});
-	});
-
 	$("#product-type-save-btn").on('click', function(){
-		let type_name = document.getElementById('product-type-name').value
-		let type_shortcut = document.getElementById('product-type-shortcut').value
+		let type_name = document.getElementById('product-type-name').value.replace(/^\s+|\s+$/g, '');
+		let type_shortcut = document.getElementById('product-type-shortcut').value.replace(/^\s+|\s+$/g, '');
+		if(type_name.length < 4){
+			return alert('Nome inválido!');
+		};
+		if(type_shortcut.length < 3){
+			return alert('Abreviação inválida!');
+		};
 		$.ajax({
 			url: '/factory/product/addType',
 			method: 'post',
@@ -270,8 +188,14 @@ $(function(){
 	});
 
 	$("#product-color-save-btn").on('click', function(){
-		let color_name = document.getElementById('product-color-name').value
-		let color_shortcut = document.getElementById('product-color-shortcut').value
+		let color_name = document.getElementById('product-color-name').value.replace(/^\s+|\s+$/g, '');
+		let color_shortcut = document.getElementById('product-color-shortcut').value.replace(/^\s+|\s+$/g, '');
+		if(color_name.length < 3){
+			return alert('Nome inválido!');
+		};
+		if(color_shortcut.length < 2){
+			return alert('Abreviação inválida!');
+		};
 		$.ajax({
 			url: '/factory/product/addColor',
 			method: 'post',
@@ -291,6 +215,93 @@ $(function(){
 		});
 	});
 });
+
+function showProduct(cod){
+	$.ajax({
+		url: '/factory/product/show',
+		method: 'post',
+		data: { 
+			product_cod: cod
+		},
+		success: function(response){
+			if(response.unauthorized){
+				alert(response.unauthorized);
+				window.location.href = '/login';
+				return;
+			};
+
+			// document.getElementById('product-show-tbody').innerHTML = "";
+			let html = "";
+			html += "<tr>";
+			html += "<td id='show-product-id'>"+response.product[0].cod+"</td>";
+			html += "<td>"+response.product[0].type+"</td>";
+			html += "<td>"+response.product[0].name+"</td>";
+			html += "<td>"+response.product[0].size+"</td>";
+			html += "<td>"+response.product[0].color+"</td>";
+			html += "<td>"+response.product[0].amount+"</td>";
+			html += "<td>"+response.product[0].value+"</td>";
+			html += "<td><a onclick='productAddImage("+response.product[0].id+", "+response.product[0].cod+")'>add img</a></td>";
+			html += "<td><a onclick='hideProduct()'>Esconder</a></td>";
+			html += "</tr>";
+
+			document.getElementById('product-show-tbody').innerHTML = html;
+			document.getElementById('product-show-box').style.display = 'block';
+
+			if(response.product[0].images.length){
+				let pageSize = 1;
+				let page = 0;
+				let images = response.product[0].images;
+
+				function paging(){
+					let htmlImage = "";
+					
+				    for (let i = page * pageSize; i < images.length && i < (page + 1) * pageSize;i++){
+						htmlImage += "<img src='"+response.product[0].images[i].url+"' style='width:350px;height:350px;'>";
+						htmlImage += "<div clas='box-1'>"
+						htmlImage += "<br>"
+						htmlImage += "<button class='btn-generic-big' onclick='productRemoveImage("+response.product[0].images[i].id+", "+response.product[0].cod+")'>Excluir</button>";
+						htmlImage += "</div>"
+					};
+
+					document.getElementById('product-show-image').innerHTML = htmlImage;
+					document.getElementById('product-show-image').style.display = 'block';
+					
+				    $('#imagePageNumber').text('' + (page + 1) + ' de ' + Math.ceil(images.length / pageSize));
+				};
+
+				// btn.attr('disabled', false);
+
+				function saleButtonsPaging(){
+				    $('#imageNext').prop('disabled', images.length <= pageSize || page >= images.length / pageSize - 1);
+				    $('#imagePrevious').prop('disabled', images.length <= pageSize || page == 0);
+				};
+
+				$(function(){
+				    $('#imageNext').click(function(){
+				        if(page < images.length / pageSize - 1){
+				            page++;
+				            paging();
+				            saleButtonsPaging();
+				        };
+				    });
+				    $('#imagePrevious').click(function(){
+				        if(page > 0){
+				            page--;
+				            paging();
+				            saleButtonsPaging();
+				        };
+				    });
+				    paging();
+				    saleButtonsPaging();
+				});
+			} else {
+				document.getElementById('product-show-image').innerHTML = "SEM IMAGENS";
+				// document.getElementById('product-show-image').style.display = 'none';
+			};
+			// btn.css('pointerEvents', 'auto');
+		}
+	});
+}
 
 function hideProduct(){
 	document.getElementById('product-show-box').style.display = "none";
@@ -313,14 +324,13 @@ function removeProduct(cod){
 				};
 
 				alert(response.done);
-				
 				$("#product-filter-btn").click();
 			}
 		});
 	};
 };
 
-function productAddImage(id){
+function productAddImage(id, cod){
 	let image = prompt("Preencha com a URL da imagem");
 	if(image){
 		if(image.length < 7){
@@ -346,7 +356,7 @@ function productAddImage(id){
 						return;
 					};
 
-					document.getElementById("product-show-box").style.display = "none";
+					showProduct(cod);
 					alert(response.done);
 				}
 			});	
@@ -358,7 +368,7 @@ function productAddImage(id){
 	};
 };
 
-function productRemoveImage(id){
+function productRemoveImage(id, cod){
 	let r = confirm("Deseja realmente excluir a image?");
 	if(r){
 		$.ajax({
@@ -374,7 +384,7 @@ function productRemoveImage(id){
 					return;
 				};
 
-				document.getElementById("product-show-box").style.display = "none";
+				showProduct(cod);
 				alert(response.done);
 			}
 		});
@@ -390,7 +400,12 @@ function getProductTypes(){
 			response.types.forEach((type) => {
 				html += "<option value='"+type.shortcut+"'>"+type.name+"</option>";
 			});
-			document.getElementById('product_type').innerHTML = html;
+			if(document.getElementById('product_type')){
+				document.getElementById('product_type').innerHTML = html;
+			};
+			if(document.getElementById('src_product_type')){
+				document.getElementById('src_product_type').innerHTML = html;
+			};
 		}
 	});
 };
@@ -404,14 +419,47 @@ function getProductColors(){
 			response.colors.forEach((color) => {
 				html += "<option value='"+color.shortcut+"'>"+color.name+"</option>";
 			});
-			document.getElementById('product_color').innerHTML = html;
+			if(document.getElementById('product_color').innerHTML){
+				document.getElementById('product_color').innerHTML = html;
+			};
+			if(document.getElementById('src_product_color').innerHTML){
+				document.getElementById('src_product_color').innerHTML = html;
+			};
 		}
 	});
 };
 
+function displayProductTypeBox(){
+	let productForm = document.getElementById("product-type-frm");
+	if(productForm.style.display == "none"){
+		productForm.style.display = "block";	
+	} else if(productForm.style.display == "block"){
+		productForm.style.display = "none";	
+	};
+};
+
+function displayProductColorBox(){
+	let productForm = document.getElementById("product-color-frm");
+	if(productForm.style.display == "none"){
+		productForm.style.display = "block";	
+	} else if(productForm.style.display == "block"){
+		productForm.style.display = "none";	
+	};
+};
 
 function displayProductCreateFrm(){
 	let productForm = document.getElementById("product-create-frm");
+	if(productForm.style.display == "none"){
+		getProductTypes();
+		getProductColors();
+		productForm.style.display = "block";	
+	} else if(productForm.style.display == "block"){
+		productForm.style.display = "none";	
+	};
+};
+
+function displayProductFilterFrm(){
+	let productForm = document.getElementById("product-filter-frm");
 	if(productForm.style.display == "none"){
 		getProductTypes();
 		getProductColors();
@@ -430,7 +478,7 @@ function getProductSelectTypes(){
 			response.types.forEach((type) => {
 				html += "<option value='"+type.shortcut+"'>"+type.name+"</option>";
 			});
-			document.getElementById('get-product-type').innerHTML = html;
+			document.getElementById('src-product-type').innerHTML = html;
 		}
 	});
 };
@@ -444,7 +492,7 @@ function getProductSelectColors(){
 			response.colors.forEach((color) => {
 				html += "<option value='"+color.shortcut+"'>"+color.name+"</option>";
 			});
-			document.getElementById('get-product-color').innerHTML = html;
+			document.getElementById('src-product-color').innerHTML = html;
 		}
 	});
 };

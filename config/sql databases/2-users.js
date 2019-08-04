@@ -17,6 +17,7 @@ CREATE TABLE `lfsdb`.`users` (
 // EXAMPLE OF CHAT ROOM TABLE
 CREATE TABLE `lfsdb`.`room1` (
   `id` INT NOT NULL AUTO_INCREMENT,
+  `full_date` VARCHAR(45) NOT NULL,
   `user` VARCHAR(45) NOT NULL,
   `message` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`id`),

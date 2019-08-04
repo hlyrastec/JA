@@ -29,14 +29,14 @@ const userController = {
 		res.redirect('/');
 	},
 	list: async (req, res) => {
-		if(!await userController.verifyAccess(req, res, ['prp','grf','dvp'])){
+		if(!await userController.verifyAccess(req, res, ['dvp','prp','spt','grf','grl','crd'])){
 			return res.send({ unauthorized: "Usuário não autorizado."});
 		};
 		let users = await User.list();
 		res.send({ users: users });
 	},
 	show: async (req, res) => {
-		if(!await userController.verifyAccess(req, res, ['prp','grf','dvp'])){
+		if(!await userController.verifyAccess(req, res, ['dvp','prp','spt','grf','grl','crd'])){
 			return res.send({ unauthorized: "Usuário não autorizado."});
 		};
 
@@ -57,7 +57,6 @@ const userController = {
 
 		if(user.email){
 			var row = await User.findByEmail(user);
-			console.log(row);
 			if(row.length){ return res.send({ msg: "Este e-mail já está cadastrado." })};
 		};
 

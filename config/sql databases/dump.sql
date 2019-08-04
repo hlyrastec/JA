@@ -90,7 +90,7 @@ CREATE TABLE `product_color` (
   `shortcut` varchar(7) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -99,7 +99,7 @@ CREATE TABLE `product_color` (
 
 LOCK TABLES `product_color` WRITE;
 /*!40000 ALTER TABLE `product_color` DISABLE KEYS */;
-INSERT INTO `product_color` VALUES (1,'Preto','pt');
+INSERT INTO `product_color` VALUES (1,'Preto','pt'),(2,'Verde','vd'),(3,'Tan','tan');
 /*!40000 ALTER TABLE `product_color` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -116,7 +116,7 @@ CREATE TABLE `product_image` (
   `url` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `product_image_UNIQUE` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -125,7 +125,6 @@ CREATE TABLE `product_image` (
 
 LOCK TABLES `product_image` WRITE;
 /*!40000 ALTER TABLE `product_image` DISABLE KEYS */;
-INSERT INTO `product_image` VALUES (3,3,'https://i.imgur.com/10W1mVf.jpg'),(4,3,'https://i.imgur.com/v8glq1r.jpg');
 /*!40000 ALTER TABLE `product_image` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -163,9 +162,12 @@ DROP TABLE IF EXISTS `room1`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `room1` (
-  `id` int(11) NOT NULL DEFAULT '0',
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `full_date` varchar(45) NOT NULL,
   `user` varchar(45) NOT NULL,
-  `message` varchar(255) NOT NULL
+  `message` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -179,6 +181,32 @@ LOCK TABLES `room1` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `room2`
+--
+
+DROP TABLE IF EXISTS `room2`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `room2` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `full_date` varchar(45) NOT NULL,
+  `user` varchar(45) NOT NULL,
+  `message` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `room2`
+--
+
+LOCK TABLES `room2` WRITE;
+/*!40000 ALTER TABLE `room2` DISABLE KEYS */;
+/*!40000 ALTER TABLE `room2` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `room3`
 --
 
@@ -187,6 +215,7 @@ DROP TABLE IF EXISTS `room3`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `room3` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `full_date` varchar(45) NOT NULL,
   `user` varchar(45) NOT NULL,
   `message` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
@@ -212,11 +241,12 @@ DROP TABLE IF EXISTS `room4`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `room4` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `full_date` varchar(45) NOT NULL,
   `user` varchar(45) NOT NULL,
   `message` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -225,7 +255,6 @@ CREATE TABLE `room4` (
 
 LOCK TABLES `room4` WRITE;
 /*!40000 ALTER TABLE `room4` DISABLE KEYS */;
-INSERT INTO `room4` VALUES (1,'Henrique Lyra','Olá Daniel!');
 /*!40000 ALTER TABLE `room4` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -244,7 +273,7 @@ CREATE TABLE `store_customer` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
   UNIQUE KEY `cpf_UNIQUE` (`cpf`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -253,7 +282,6 @@ CREATE TABLE `store_customer` (
 
 LOCK TABLES `store_customer` WRITE;
 /*!40000 ALTER TABLE `store_customer` DISABLE KEYS */;
-INSERT INTO `store_customer` VALUES (1,'Henrique Lyra','07103488606','33999999961'),(2,'Henrique 2','12938192381','12938129381'),(3,'Henrique 3','91238912839','09019230912'),(4,'joao','15717132293','31293891283');
 /*!40000 ALTER TABLE `store_customer` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -311,7 +339,7 @@ CREATE TABLE `store_sale` (
   `user` varchar(45) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -320,7 +348,6 @@ CREATE TABLE `store_sale` (
 
 LOCK TABLES `store_sale` WRITE;
 /*!40000 ALTER TABLE `store_sale` DISABLE KEYS */;
-INSERT INTO `store_sale` VALUES (1,'26/07/2019','26/07/2019-19:46:48','07103488606','Henrique Lyra','din','1',20.00,300.00,280.00,'concluída','Henrique Lyra'),(2,'26/07/2019','26/07/2019-19:49:2','07103488606','Henrique Lyra','din','1',170.00,1170.00,1000.00,'concluída','Henrique Lyra'),(3,'26/07/2019','26/07/2019-19:49:24','07103488606','Henrique Lyra','din','1',170.00,1170.00,1000.00,'concluída','Henrique Lyra'),(4,'26/07/2019','26/07/2019-19:49:38','07103488606','Henrique Lyra','din','1',170.00,1170.00,1000.00,'concluída','Henrique Lyra'),(5,'26/07/2019','26/07/2019-19:49:59','07103488606','Henrique Lyra','din','1',170.00,1170.00,1000.00,'concluída','Henrique Lyra'),(6,'26/07/2019','26/07/2019-20:16:19','07103488606','Henrique Lyra','din','1',10.00,780.00,770.00,'concluída','Henrique Lyra'),(7,'27/07/2019','27/07/2019-2:13:50','07103488606','Henrique Lyra','din','1',320.00,2820.00,2500.00,'concluída','Henrique Lyra'),(8,'27/07/2019','27/07/2019-9:31:40','07103488606','Henrique Lyra','din','2',33.00,900.00,867.00,'concluída','Henrique Lyra'),(9,'27/07/2019','27/07/2019-9:32:2','07103488606','Henrique Lyra','chq','6',331.00,4350.00,4019.00,'concluída','Henrique Lyra'),(10,'29/07/2019','29/07/2019-20:32:31','07103488606','Henrique Lyra','din','1',10.00,40.00,30.00,'concluída','Henrique Lyra'),(11,'29/07/2019','29/07/2019-22:52:15','07103488606','Henrique Lyra','din','1',50.00,750.00,700.00,'concluída','Henrique Lyra'),(12,'29/07/2019','29/07/2019-22:56:5','07103488606','Henrique Lyra','din','1',300.50,5760.00,5459.50,'concluída','Henrique Lyra'),(13,'29/07/2019','29/07/2019-23:6:36','07103488606','Henrique Lyra','din','1',10000.00,15000.00,5000.00,'concluída','Henrique Lyra'),(14,'29/07/2019','29/07/2019-23:29:5','15717132293','joao','din','4',300.00,900.00,600.00,'concluída','Henrique Lyra'),(15,'29/07/2019','29/07/2019-23:42:31','07103488606','Henrique Lyra','din','1',333.00,900.00,567.00,'concluída','Henrique Lyra');
 /*!40000 ALTER TABLE `store_sale` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -339,7 +366,7 @@ CREATE TABLE `store_sale_product` (
   `value` decimal(8,2) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=67 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -348,7 +375,7 @@ CREATE TABLE `store_sale_product` (
 
 LOCK TABLES `store_sale_product` WRITE;
 /*!40000 ALTER TABLE `store_sale_product` DISABLE KEYS */;
-INSERT INTO `store_sale_product` VALUES (1,'1',3,2,150.00),(2,'2',3,1,150.00),(3,'2',6,1,150.00),(4,'2',7,1,150.00),(5,'2',8,2,180.00),(6,'2',25,1,180.00),(7,'2',17,1,180.00),(8,'2',18,1,180.00),(9,'3',3,1,150.00),(10,'3',6,1,150.00),(11,'3',7,1,150.00),(12,'3',8,2,180.00),(13,'3',25,2,180.00),(14,'3',17,1,180.00),(15,'3',18,1,180.00),(16,'4',3,1,150.00),(17,'4',6,1,150.00),(18,'4',7,2,150.00),(19,'4',8,2,180.00),(20,'4',25,2,180.00),(21,'4',17,1,180.00),(22,'4',18,1,180.00),(23,'5',3,1,150.00),(24,'5',6,6,150.00),(25,'5',7,2,150.00),(26,'5',8,2,180.00),(27,'5',25,2,180.00),(28,'5',17,1,180.00),(29,'5',18,1,180.00),(30,'6',6,4,150.00),(31,'6',8,1,180.00),(32,'7',26,3,40.00),(33,'7',3,2,150.00),(34,'7',7,1,150.00),(35,'7',4,2,150.00),(36,'7',11,3,150.00),(37,'7',12,4,150.00),(38,'7',9,5,180.00),(39,'8',3,1,150.00),(40,'8',6,2,150.00),(41,'8',7,3,150.00),(42,'9',6,26,150.00),(43,'9',7,3,150.00),(44,'10',26,1,40.00),(45,'11',4,5,150.00),(46,'12',3,1,150.00),(47,'12',6,12,150.00),(48,'12',7,11,150.00),(49,'12',8,4,180.00),(50,'12',17,8,180.00),(51,'13',3,100,150.00),(52,'14',6,3,150.00),(53,'14',3,3,150.00),(54,'15',6,6,150.00);
+INSERT INTO `store_sale_product` VALUES (1,'1',3,2,150.00),(2,'2',3,1,150.00),(3,'2',6,1,150.00),(4,'2',7,1,150.00),(5,'2',8,2,180.00),(6,'2',25,1,180.00),(7,'2',17,1,180.00),(8,'2',18,1,180.00),(9,'3',3,1,150.00),(10,'3',6,1,150.00),(11,'3',7,1,150.00),(12,'3',8,2,180.00),(13,'3',25,2,180.00),(14,'3',17,1,180.00),(15,'3',18,1,180.00),(16,'4',3,1,150.00),(17,'4',6,1,150.00),(18,'4',7,2,150.00),(19,'4',8,2,180.00),(20,'4',25,2,180.00),(21,'4',17,1,180.00),(22,'4',18,1,180.00),(23,'5',3,1,150.00),(24,'5',6,6,150.00),(25,'5',7,2,150.00),(26,'5',8,2,180.00),(27,'5',25,2,180.00),(28,'5',17,1,180.00),(29,'5',18,1,180.00),(30,'6',6,4,150.00),(31,'6',8,1,180.00),(32,'7',26,3,40.00),(33,'7',3,2,150.00),(34,'7',7,1,150.00),(35,'7',4,2,150.00),(36,'7',11,3,150.00),(37,'7',12,4,150.00),(38,'7',9,5,180.00),(39,'8',3,1,150.00),(40,'8',6,2,150.00),(41,'8',7,3,150.00),(42,'9',6,26,150.00),(43,'9',7,3,150.00),(44,'10',26,1,40.00),(45,'11',4,5,150.00),(46,'12',3,1,150.00),(47,'12',6,12,150.00),(48,'12',7,11,150.00),(49,'12',8,4,180.00),(50,'12',17,8,180.00),(51,'13',3,100,150.00),(52,'14',6,3,150.00),(53,'14',3,3,150.00),(54,'15',6,6,150.00),(55,'16',3,1,150.00),(56,'17',3,3,150.00),(57,'17',6,1,150.00),(58,'17',7,1,150.00),(59,'17',8,1,180.00),(60,'17',25,1,180.00),(61,'18',3,33,150.00),(62,'19',26,25,40.00),(63,'20',26,16,40.00),(64,'21',3,1,150.00),(65,'21',6,1,150.00),(66,'21',7,1,150.00);
 /*!40000 ALTER TABLE `store_sale_product` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -383,7 +410,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'ADMIN','Desenvolvedor','hlyrastec@gmail.com','04/11/1994','ADMIN','$2a$10$0dD64MBT2VMTxAe/UKc6kel2iWykAxP/lK8piRkp8pPg1OlOFr8P6','dvp','disconnected','closed'),(3,'Henrique Lyra','Suporte','hhlyras2011@gmail.com','4/Novembro/1994','hlyras','$2a$10$tSdiXkF9QCCt.km3zIqx2u3jF2j6WLXFcWFzzGs6hVlER9ewQYgjG','spt','disconnected','closed'),(4,'Daniel Anderson','Gerente Fábrica','danielanderson@gmail.com','12/Agosto/1992','DanielAnderson','$2a$10$VhLJhKT3st9Jm0OeTLWD/uroFYGaSHa.NFcRZxsWwaCr/Fry8UFdW','grf','disconnected','closed');
+INSERT INTO `users` VALUES (1,'ADMIN','Desenvolvedor','hlyrastec@gmail.com','04/11/1994','ADMIN','$2a$10$0dD64MBT2VMTxAe/UKc6kel2iWykAxP/lK8piRkp8pPg1OlOFr8P6','dvp','disconnected','closed'),(2,'Jean Carvalho','Proprietário','assistentejario@gmail.com','01/janeiro/2000','jeancarvalho','$2a$10$tSdiXkF9QCCt.km3zIqx2u3jF2j6WLXFcWFzzGs6hVlER9ewQYgjG','prp','disconnected','closed'),(3,'Henrique Lyra','Suporte','hhlyras2011@gmail.com','4/Novembro/1994','hlyras','$2a$10$tSdiXkF9QCCt.km3zIqx2u3jF2j6WLXFcWFzzGs6hVlER9ewQYgjG','spt','disconnected','opened'),(4,'Daniel Anderson','Gerente Fábrica','danielanderson@gmail.com','12/Agosto/1992','danielanderson','$2a$10$tSdiXkF9QCCt.km3zIqx2u3jF2j6WLXFcWFzzGs6hVlER9ewQYgjG','grf','disconnected','closed');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -396,4 +423,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-08-01  4:58:50
+-- Dump completed on 2019-08-03 16:46:36

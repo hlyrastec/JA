@@ -26,6 +26,6 @@ router.get('/cashier', cashierController.index);
 router.get('/sales', saleController.index);
 router.post('/sale/save', saleController.save);
 router.post('/sale/filter', saleController.filter);
-router.post('/sale/print', saleController.print);
+router.post('/sale/get', saleController.get);
 
 module.exports = router;

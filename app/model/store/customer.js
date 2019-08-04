@@ -19,11 +19,11 @@ Customer.save = async (customer) => {
 Customer.findById = async (id) => {
 	let query = "SELECT * FROM lfsdb.store_customer WHERE id='"+id+"';";
 	return db(query);
-}
+};
 
 Customer.findByCpf = async (cpf) => {
 	let query = "SELECT * FROM lfsdb.store_customer WHERE cpf='"+cpf+"';";
 	return db(query);
-}
+};
 
 module.exports = Customer;

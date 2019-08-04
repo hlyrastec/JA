@@ -2,7 +2,7 @@ $(function(){
 	$("#create-customer-btn").on("click", function(event){
 		document.getElementById("create-customer-btn").disabled = true;
 		
-		let name = document.getElementById('customer-name').value;
+		let name = document.getElementById('customer-name').value.replace(/^\s+|\s+$/g, '');
 		let cpf = document.getElementById('customer-cpf').value;
 		let phone = document.getElementById('customer-phone').value;
 

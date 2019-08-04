@@ -10,7 +10,7 @@ const Jobs = [
 	},
 	{
 		name: 'Gerente Loja',
-		code: 'grs'
+		code: 'grl'
 	},
 	{
 		name: 'Coordernador',
@@ -18,19 +18,23 @@ const Jobs = [
 	},
 	{
 		name: 'Caixa',
-		code: 'cxs'
+		code: 'cxl'
 	},
 	{
 		name: 'Vendedor Loja',
-		code: 'vds'
+		code: 'vdl'
 	},
 	{
-		name: 'Vendedor online',
-		code: 'vdo'
+		name: 'Vendedor E-comerce',
+		code: 'vde'
 	},
 	{
 		name: 'Estoquista',
 		code: 'etf'
+	},
+	{
+		name: 'Estoquista',
+		code: 'etl'
 	},
 	{
 		name: 'Acesso fábrica',
@@ -38,7 +42,7 @@ const Jobs = [
 	},
 	{
 		name: 'Acesso loja',
-		code: 'aas'
+		code: 'aal'
 	},
 	{
 		name: 'Sem acesso',

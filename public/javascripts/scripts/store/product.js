@@ -28,7 +28,7 @@ $(() => {
 				html += "<td>"+response.product[0].color+"</td>";
 				html += "<td>"+response.product[0].amount+"</td>";
 				html += "<td>"+response.product[0].value+"</td>";
-				html += "<td><a onclick='productAddImage("+response.product[0].id+")'>add img</a></td>";
+				// html += "<td><a onclick='productAddImage("+response.product[0].id+")'>add img</a></td>";
 				html += "<td><a onclick='hideProduct()'>Esconder</a></td>";
 				html += "</tr>";
 
@@ -44,10 +44,10 @@ $(() => {
 						let htmlImage = "";
 						
 					    for (let i = page * pageSize; i < images.length && i < (page + 1) * pageSize;i++){
-							htmlImage += "<img src='"+response.product[0].images[i].url+"' style='width:500px;height:500px;'>";
+							htmlImage += "<img src='"+response.product[0].images[i].url+"' style='width:350px;height:350px;'>";
 							htmlImage += "<div clas='box-1'>"
 							htmlImage += "<br>"
-							htmlImage += "<button class='btn-generic-big' onclick='productRemoveImage("+response.product[0].images[i].id+")'>Excluir</button>";
+							// htmlImage += "<button class='btn-generic-big' onclick='productRemoveImage("+response.product[0].images[i].id+")'>Excluir</button>";
 							htmlImage += "</div>"
 						};
 

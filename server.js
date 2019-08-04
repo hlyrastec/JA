@@ -47,5 +47,5 @@ app.use(function(req, res, next) {
 var port = process.env.PORT || 3000;
 
 server.listen(port, () => {
-	console.log('it is time!');
+	console.log('beta - 0.0.1');
 });

@@ -6,34 +6,34 @@
 		<header>
 			<a href="/"><img src="/images/favicon.png" class="favicon"></a>
 			<div>
-    			<a onclick="let r = confirm('deseja sair?');if(r==true){window.location.href='/logout'}">Logout</a>
+    			<a onclick="let r = confirm('deseja sair?');if(r==true){window.location.href='/logout'}">Sair</a>
 			</div>
 		</header>
 		<section>
 			<div class="container">
 				<div class="box-2">
-					<button class="btn-generic-big" name="">Cadastrar tipos de produto</button>
-					<div class="box-1" id="product-type-frm">
+					<button class="btn-generic-big" onclick="displayProductTypeBox('type')">Categoria dos produtos</button>
+					<div class="box-1" id="product-type-frm" style="display:none">
 						<input class="btn-generic-big" type="text" id="product-type-name" placeholder="Nome" maxlength="15">
 						<input class="btn-generic-big" type="text" id="product-type-shortcut" placeholder="Abreviação" maxlength="8">
 						<button class="btn-generic-big" id="product-type-save-btn">Cadastrar</button>
 					</div>
 				</div>
 				<div class="box-2">
-					<button class="btn-generic-big" name="">Cadastrar cores de produto</button>
-					<div class="box-1" id="product-color-frm">
+					<button class="btn-generic-big" onclick="displayProductColorBox('color')">Cores dos produtos</button>
+					<div class="box-1" id="product-color-frm" style="display:none">
 						<input class="btn-generic-big" type="text" id="product-color-name" placeholder="Nome" maxlength="15">
 						<input class="btn-generic-big" type="text" id="product-color-shortcut" placeholder="Abreviação" maxlength="3">
 						<button class="btn-generic-big" id="product-color-save-btn">Cadastrar</button>
 					</div>
 				</div>
 				<div class="box-2">
-					<button class="btn-generic-big" onclick="displayProductCreateFrm()">Cadastro de produtos</button>
+					<button class="btn-generic-big" onclick="displayProductCreateFrm('create')">Cadastro de produtos</button>
 					<div class="box-1" id="product-create-frm" style="display:none">
 						<input type="hidden" id="product_id" value="0" autocomplete="off">
-						<input type="number" class="btn-generic-big" id="product_cod" placeholder="Cód do produto" min="1" max="9999" autocomplete="off">
+						<input type="number" id="product_cod" class="btn-generic-big" placeholder="Cód do produto" min="1" max="9999" autocomplete="off">
 						<select id="product_type" class="btn-generic-big" autocomplete="off">
-							<option value="">Tipo</option>
+							<option value="">Categoria</option>
 						</select>
 						<br>
 						<input type="text" class="btn-generic-big" id="product_name" placeholder="Nome do produto" autocomplete="off" maxlength="15">
@@ -57,30 +57,33 @@
 					</div>
 				</div>
 				<div class="box-2">
-					<strong class="underline-title">Produtos cadastrados</strong><br>
-					<select id="src_product_type" class="btn-generic-small" autocomplete="off">
-						<option value="">Tipo</option>
-						<option value="Colete">Colete</option>
-						<option value="Peça_mod">Peça modular</option>
-						<option value="Coldre">Coldre</option>
-						<option value="Bornal">Bornal</option>
-					</select>
-					<select id="src_product_color" class="btn-generic-small" autocomplete="off">
-						<option value="">Cor</option>
-						<option value="pt">Preto</option>
-						<option value="vd">Verde</option>
-						<option value="tan">Tan</option>
-						<option value="ptcamo">Preto camo</option>
-						<option value="vdcamo">Verde camo</option>
-					</select>
-					<input type="button" class="btn-generic-small" id="product-filter-btn" value="Filtrar">
-					<br><br>
-					<div id="main-product-div" style="display:none">
-						<table class="tbl-info" id="main-product-tbl"></table>
-						<br>
-						<button id="productPrevious" autocomplete="off" disabled>&lsaquo;&lsaquo;</button>
-	                    <span id="productPageNumber"></span>
-	                    <button id="productNext" autocomplete="off" disabled>&rsaquo;&rsaquo;</button>
+					<button class="btn-generic-big" onclick="displayProductFilterFrm('filter')">Produtos cadastrados</button>
+					<div class="box-1" id="product-filter-frm" style="display:none">
+						<input type="text" id="src_product_cod" class="btn-generic-small" placeholder="Cód" autocomplete="off">
+						<select id="src_product_type" class="btn-generic-small" autocomplete="off">
+							<option value="">Tipo</option>
+							<option value="Colete">Colete</option>
+							<option value="Peça_mod">Peça modular</option>
+							<option value="Coldre">Coldre</option>
+							<option value="Bornal">Bornal</option>
+						</select>
+						<select id="src_product_color" class="btn-generic-small" autocomplete="off">
+							<option value="">Cor</option>
+							<option value="pt">Preto</option>
+							<option value="vd">Verde</option>
+							<option value="tan">Tan</option>
+							<option value="ptcamo">Preto camo</option>
+							<option value="vdcamo">Verde camo</option>
+						</select>
+						<input type="button" class="btn-generic-small" id="product-filter-btn" value="Filtrar">
+						<br><br>
+						<div id="main-product-div" style="display:none">
+							<table class="tbl-info" id="main-product-tbl"></table>
+							<br>
+							<button id="productPrevious" autocomplete="off" disabled>&lsaquo;&lsaquo;</button>
+		                    <span id="productPageNumber"></span>
+		                    <button id="productNext" autocomplete="off" disabled>&rsaquo;&rsaquo;</button>
+						</div>
 					</div>
 				</div>
 				
