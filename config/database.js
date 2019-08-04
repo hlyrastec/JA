@@ -1,4 +1,4 @@
-config/database.js
+// config/database.js
 module.exports = {
     'connection': {
         'host': 'mysql669.umbler.com',
