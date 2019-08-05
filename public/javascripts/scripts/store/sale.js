@@ -2,6 +2,10 @@ $(function(){
 	$('#cashier-sale-save-btn').on('click', function(event){
 		document.getElementById("cashier-sale-save-btn").disabled = true;
 
+		if(!Cashier.discount || isNaN(Cashier.discount) || Cashier.discount < 0){
+			Cashier.discount = 0;
+		};
+
 		$.ajax({
 			url: '/store/sale/save',
 			method: 'post',
