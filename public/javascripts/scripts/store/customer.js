@@ -49,7 +49,7 @@ $(function(){
 				document.getElementById('customer-phone').value = "";
 				document.getElementById("create-customer-btn").disabled = false;
 
-				document.getElementById('store-sale-customer').innerHTML = "<option value='"+cpf+"'>"+response.customer.name+"</option>";
+				document.getElementById('store-sale-customer').innerHTML = "<option value='"+customer_cpf+"'>"+customer_name+"</option>";
 			}
 		})
 	});
