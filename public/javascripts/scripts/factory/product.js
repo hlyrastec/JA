@@ -256,7 +256,7 @@ function showProduct(cod){
 					let htmlImage = "";
 					
 				    for (let i = page * pageSize; i < images.length && i < (page + 1) * pageSize;i++){
-						htmlImage += "<img src='"+response.product[0].images[i].url+"' style='width:350px;height:350px;'>";
+						htmlImage += "<img src='"+response.product[0].images[i].url+"' style='width:280px;height:320px;'>";
 						htmlImage += "<div clas='box-1'>"
 						htmlImage += "<br>"
 						htmlImage += "<button class='btn-generic-big' onclick='productRemoveImage("+response.product[0].images[i].id+", "+response.product[0].cod+")'>Excluir</button>";
