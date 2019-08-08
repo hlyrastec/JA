@@ -1,18 +1,26 @@
 const mysql = require('mysql');
 const dbconfig = require('./database');
 
+const pool  = mysql.createPool({
+	connectionLimit : 10,
+	host : dbconfig.connection.host,
+	port : dbconfig.connection.port,
+	user : dbconfig.connection.user,
+	password : dbconfig.connection.password,
+	database : dbconfig.database
+});
+
 const db = async (query) => {
-	const connection = mysql.createConnection(dbconfig.connection);
-	connection.query('USE ' + dbconfig.database);
 	return new Promise(async (resolve, reject) => {
-		connection.query(query, (err, rows) => {
-			if(!err){
-				connection.end();
-				resolve(rows);
-			} else {
-				connection.end();
-				reject(err);
-			};
+		pool.getConnection((err, connection) => {
+		    connection.query(query, (err, rows) => {
+		        connection.release();
+		        if(!err){
+		        	resolve(rows)
+		        } else {
+		        	reject(err);
+		        };
+		    });
 		});
 	});
 };
