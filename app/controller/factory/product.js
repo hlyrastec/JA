@@ -31,7 +31,6 @@ const productController = {
 		if(!product.color || product.type.length > 10){return res.send({ msg: 'Preencha a cor do produto.' })};
 		if(!product.size || product.size.length > 3){return res.send({ msg: 'Preencha o tamanho do produto.' })};
 
-		
 		if(!product.id){
 			var row = await Product.findByCod(product.cod);
 			if(row.length){return res.send({ msg: 'Este código de produto já está cadastrado.' })};

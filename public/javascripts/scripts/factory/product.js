@@ -82,7 +82,7 @@ $(function(){
 				let products = response.products;
 
 				function paging(){
-					html = "<tr><td>Cód</td><td>Tipo</td><td>Nome</td><td>Tamanho</td><td>Cor</td></tr>";
+					html = "<tr><td>Cód</td><td>Tipo</td><td>Nome</td><td>Tamanho</td><td>Cor</td><td>Valor</td></tr>";
 					if(products.length){
 					    for (let i = page * pageSize; i < products.length && i < (page + 1) * pageSize;i++){
 							html += "<tr>";
