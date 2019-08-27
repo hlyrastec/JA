@@ -67,34 +67,37 @@
 				</div>
 
                 <div class="box-3">
-	                	<button class="btn-generic-big" onclick="displayProductSelectFrm()">Filtro de produtos</button>
-						<div class="box-1" id="product-select-frm" style="display:none">
-							<div class="box-1">
-								<form id="product-form-filter">
-									<input type="text" id="src-product-cod" class="btn-generic-small" placeholder="Cód" autocomplete="off">
-									<select id="src-product-type" class="btn-generic-small">
+	                	<button class="btn-generic-big" onclick="displayProductSelectFrm('kart')">Filtro de produtos</button>
+						<div class="box-1" id="product-select-box" style="display:none">
+							<form id="product-filter-form">
+								<div class="box-1">
+									<input type="hidden" name="location" value="kart">
+									<input type="text" name="cod" id="kart-product-select" class="btn-generic-small" placeholder="Cód" autocomplete="off">
+									<select name="type" id="kart-product-filter-type" class="btn-generic-small">
 										<option value="">Categoria</option>
 									</select>
-									<select id="src-product-color" class="btn-generic-small">
+									<select name="color" id="kart-product-filter-color" class="btn-generic-small">
 										<option value="">Cor</option>
 									</select>
 									<button type="submit" class="btn-generic-small">Filtrar</button>
-			                  	</form>
-			                </div>
-							<div class="box-1">
-							    <select id="cashier-product-select" class="btn-generic-medium" name="product">
-							      <option value="">Produto</option>
-							    </select>
-							    <input type="number" id="cashier-product-amount-select" class="btn-generic-small" placeholder="Quantidade">
-							    <input type="button" id="cashier-product-add-btn" class="btn-generic-small" value="Adicionar">
-							</div>
+								</div>
+			                </form>
+			                <form id="kart-product-select-form">
+								<div class="box-1">
+								    <select name="cod" id="kart-product-cod" class="btn-generic-medium" name="product">
+								      <option value="">Produto</option>
+								    </select>
+								    <input type="number" name="amount" id="kart-product-amount" class="btn-generic-small" placeholder="Quantidade">
+								    <input type="submit" class="btn-generic-small" value="Adicionar">
+			                	</div>
+			                </form>
 	                	</div>
 	                </div>
 
                 <div class="box-2">
                 	<strong>Produtos da Venda</strong>
                 	<div class="box-1">
-						<table id="main-product-tbl" class="tbl-generic">
+						<table id="cashier-product-tbl" class="tbl-generic">
 							<tr>
 								<td>Cod</td>
 								<td>Informação do produto</td>
@@ -104,7 +107,7 @@
 								<td>Valor unitário</td>
 								<td>Valor total</td>
 							</tr>
-							<tbody id="main-product-tbl-tbody"></tbody>
+							<tbody id="cashier-product-tbl-tbody"></tbody>
 						</table>
                 	</div>
                 </div>

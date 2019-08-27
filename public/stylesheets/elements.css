@@ -161,11 +161,12 @@ a {
 	padding-top: 5px;
 	padding-bottom: 5px;
 	cursor: pointer;
-	border: 1px solid #fff;
+	background-color: #f0f0f0;
+	border: 1px solid #e1e1e1;
 }
 
 .span-menu:hover {
-	background-color: #f0f0f0;
+	background-color: #f9f9f9;
 	border-radius: 3px;
 	border: 1px solid #e1e1e1;
 }

@@ -12,7 +12,9 @@ router.get('/support', homeController.support);
 
 router.use('/user', require('./user'));
 router.use('/admin', require('./admin'));
+router.use('/product', require('./product'));
 router.use('/factory', require('./factory'));
 router.use('/store', require('./store'));
+router.use('/catalog', require('./catalog'));
 
 module.exports = router;

@@ -22,33 +22,32 @@ $(function(){
 	  /////////////////////
 	 /// KART FUNCTIONS //
 	/////////////////////
-	$('#cashier-product-add-btn').on('click', function(event){
+	$('#kart-product-select-form').on('submit', function(event){
 		event.preventDefault();
-		document.getElementById("cashier-product-add-btn").disabled = true;
 
-		let product_cod = document.getElementById('cashier-product-select').value;
-		let product_amount = parseInt(document.getElementById('cashier-product-amount-select').value);
+		let cod = document.getElementById('kart-product-cod').value;
+		let amount = parseInt(document.getElementById('kart-product-amount').value);
 		
-		if(product_cod!='' && product_cod!='0'){
+		if(cod!='' && cod!='0'){
 			// continue;
 		} else {
 			alert('Favor selecionar um produto');
-			return document.getElementById("cashier-product-add-btn").disabled = false;
+			return;
 		};
 
 		for(i in cashier_product_array){
-			if(product_cod==cashier_product_array[i].cod){
-				product_cod = '';
+			if(cod == cashier_product_array[i].cod){
+				cod = '';
 				alert('Produto já inserido');
-				return document.getElementById("cashier-product-add-btn").disabled = false;
+				return;
 			};
 		};
 		
-		if(product_amount!='' && product_amount>0){
+		if(amount!='' && amount>0){
 			// continue
 		} else {
 			alert('Favor inserir a quantidade');
-			return document.getElementById("cashier-product-add-btn").disabled = false;
+			return;
 		};
 
 		// verify product in storage
@@ -56,13 +55,13 @@ $(function(){
 			url: '/store/product/get',
 			method: 'post',
 			data: { 
-				product_cod: product_cod
+				product_cod: cod
 			},
 			success: (response) => {
-				if(response.product[0].amount < product_amount){
-					alert('Restam apenas '+ response.product[0].amount + ' deste produto em estoque.');
-					return document.getElementById("cashier-product-add-btn").disabled = false;
-				};
+				// if(response.product[0].amount < amount){
+				// 	alert('Restam apenas '+ response.product[0].amount + ' deste produto em estoque.');
+				// 	return;
+				// };
 
 				let product = {
 					id: response.product[0].id,
@@ -71,19 +70,20 @@ $(function(){
 					name: response.product[0].name,
 					color: response.product[0].color,
 					size: response.product[0].size,
-					amount: product_amount,
+					amount: amount,
 					value: response.product[0].value,
-					total_value: response.product[0].value * product_amount
+					total_value: response.product[0].value * amount
 				};
 
 				cashier_product_array.push(product);
 
-				let product_tbody = document.getElementById('main-product-tbl-tbody');
+
+				let product_tbody = document.getElementById('cashier-product-tbl-tbody');
 				
 				let html = "<tr>";
 				html += "<td id='cashier-product-id' hidden>"+ product.id +"</td>";
 				html += "<td id='cashier-product-cod' hidden>"+product.cod+"</td>";
-				html += "<td><a id='cashier-product-show-btn'>"+product.cod+"</a></td>";
+				html += "<td><a onclick='showProduct("+product.cod+")'>"+product.cod+"</a></td>";
 				html += "<td id='cashier-product-info'>"+ product.type +" | "+ product.name +" | "+ product.color +" | "+ product.size +"</td>";
 				html += "<td id='cashier-product-amount-remove-btn'><a>-</a></td>";
 				html += "<td id='cashier-product-amount'>"+ product.amount +"</td>";
@@ -95,7 +95,6 @@ $(function(){
 
 				product_tbody.innerHTML += html;
 				updateCashier();
-				document.getElementById("cashier-product-add-btn").disabled = false;
 			}
 		});
 	});
@@ -131,7 +130,7 @@ $(function(){
 			method: 'post',
 			data: { product_cod: product_cod },
 			success: function(response){
-				if(response.product[0].amount>=parseInt(rowEl.find('#cashier-product-amount').text())+1){
+				// if(response.product[0].amount>=parseInt(rowEl.find('#cashier-product-amount').text())+1){
 					for(i in cashier_product_array){
 						if(product_cod == cashier_product_array[i].cod){
 							cashier_product_array[i].total_value = cashier_product_array[i].value * (parseInt(rowEl.find('#cashier-product-amount').text()) + 1);
@@ -145,9 +144,9 @@ $(function(){
 						};
 					});
 					updateCashier();
-				} else {
-					return alert('Não há mais deste produto em estoque.');
-				};
+				// } else {
+					// return alert('Não há mais deste produto em estoque.');
+				// };
 			}
 		});
 	});
@@ -202,7 +201,7 @@ function clearCashier(){
 	document.getElementById('store-sale-payment-method').value = "";
 	document.getElementById('store-sale-payment-installment').value = "1";
 
-	document.getElementById('main-product-tbl-tbody').innerHTML = "";
+	document.getElementById('cashier-product-tbl-tbody').innerHTML = "";
 
 	document.getElementById('cashier-discount-update-value').value = "";
 

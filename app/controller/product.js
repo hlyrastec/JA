@@ -1,14 +1,14 @@
-const userController = require('../user');
-const Product = require('../../model/factory/product');
-const StoreProduct = require('../../model/store/product');
-const Jobs = require('../../model/job');
+const userController = require('./user');
+const Product = require('../model/factory/product');
+const StoreProduct = require('../model/store/product');
+const Jobs = require('../model/job');
 
 const productController = {
 	index: async (req, res) => {
 		if(!await userController.verifyAccess(req, res, ['dvp','prp','spt','grf','grl','crd'])){
 			return res.redirect('/login');
 		};
-		res.render('factory/product/index');
+		res.render('admin/product/index');
 	},
 	save: async (req, res) => {
 		if(!await userController.verifyAccess(req, res, ['dvp','grl','grf','crd'])){
@@ -98,16 +98,20 @@ const productController = {
 			return res.send({ unauthorized: "Usuário não autorizado."});
 		};
 
-		if(req.body.product_cod){
-			let product = await Product.findByCod(req.body.product_cod);
+		if(isNaN(req.body.cod) || req.body.cod < 0 || req.body.cod > 9999){
+			req.body.cod = "";
+		};
+
+		if(req.body.cod){
+			let product = await Product.findByCod(req.body.cod);
 			res.send({ products: product });
 		} else {
 			const product = {
-				type: req.body.product_type,
-				color: req.body.product_color
+				type: req.body.type,
+				color: req.body.color
 			};
 			let products = await Product.filter(product);
-			res.send({ products: products });
+			res.send({ location: req.body.location, products: products });
 		};
 	},
 	remove: async (req, res) => {

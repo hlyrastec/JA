@@ -7,7 +7,7 @@ router.get('/', userController.verify, (req, res) => {
 	if(req.user.access == ['aaa'] || req.user.access == ['aas']){
 		return res.redirect('/login');
 	};
-	res.render('factory/index');
+	res.render('catalog/index');
 });
 
 module.exports = router;

@@ -57,23 +57,26 @@
 					</div>
 				</div>
 				<div class="box-2">
-					<button class="btn-generic-big" onclick="displayProductFilterFrm('filter')">Produtos cadastrados</button>
-					<div class="box-1" id="product-filter-frm" style="display:none">
-						<input type="text" id="src_product_cod" class="btn-generic-small" placeholder="Cód" autocomplete="off">
-						<select id="src_product_type" class="btn-generic-small" autocomplete="off">
-							<option value="">Categoria</option>
-						</select>
-						<select id="src_product_color" class="btn-generic-small" autocomplete="off">
-							<option value="">Cor</option>
-						</select>
-						<input type="button" class="btn-generic-small" id="product-filter-btn" value="Filtrar">
+					<button class="btn-generic-big" onclick="displayProductFilterFrm('admin')">Produtos cadastrados</button>
+					<div class="box-1" id="product-filter-box" style="display:none">
+						<form id="product-filter-form">
+							<input type="hidden" name="location" value="admin">
+							<input type="text" name="cod" class="btn-generic-small" placeholder="Cód" autocomplete="off">
+							<select name="type" id="admin-product-filter-type" class="btn-generic-small" autocomplete="off">
+								<option value="">Categoria</option>
+							</select>
+							<select name="color" id="admin-product-filter-color" class="btn-generic-small" autocomplete="off">
+								<option value="">Cor</option>
+							</select>
+							<input type="submit" class="btn-generic-small" value="Filtrar">
+						</form>
 						<br><br>
-						<div id="main-product-div" style="display:none">
-							<table class="tbl-info" id="main-product-tbl"></table>
+						<div id="admin-product-div" style="display:none">
+							<table class="tbl-info" id="admin-product-tbl"></table>
 							<br>
-							<button id="productPrevious" autocomplete="off" disabled>&lsaquo;&lsaquo;</button>
-		                    <span id="productPageNumber"></span>
-		                    <button id="productNext" autocomplete="off" disabled>&rsaquo;&rsaquo;</button>
+							<button id="adminProductPrevious" autocomplete="off" disabled>&lsaquo;&lsaquo;</button>
+		                    <span id="adminProductPageNumber"></span>
+		                    <button id="adminProductNext" autocomplete="off" disabled>&rsaquo;&rsaquo;</button>
 						</div>
 					</div>
 				</div>

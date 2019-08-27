@@ -3,7 +3,6 @@ const Product = require('../../model/store/product');
 const Jobs = require('../../model/job');
 
 const productController = {
-	// create storage
 	index: async (req, res) => {
 		if(!await userController.verifyAccess(req, res, ['dvp'])){
 			return res.redirect('/login');

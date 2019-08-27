@@ -78,6 +78,6 @@ $(function(){
 
 				document.getElementById('store-sale-customer').innerHTML = "<option value='"+cpf+"'>"+response.customer.name+"</option>";
 			}
-		})
-	})
+		});
+	});
 });

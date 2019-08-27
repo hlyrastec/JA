@@ -1,0 +1,63 @@
+<html>
+	<head>
+        <% include ../partials/head %>
+	</head>
+	<body>
+		<header>
+			<a href="/"><img src="/images/favicon.png" class="favicon"></a>
+			<div>
+    			<a onclick="let r = confirm('deseja sair?');if(r==true){window.location.href='/logout'}">Sair</a>
+			</div>
+		</header>
+		<section>
+			<div class="container">
+				<div class="box-1">
+					<button class="btn-generic-big" onclick="displayProductFilterFrm('catalog')">Produtos cadastrados</button>
+					<div class="box-1" id="product-filter-box" style="display:none">
+						<form id="product-filter-form">
+							<input type="hidden" name="location" value="catalog">
+							<input type="text" name="cod" class="btn-generic-small" placeholder="Cód" autocomplete="off">
+							<select name="type" id="catalog-product-filter-type" class="btn-generic-small" autocomplete="off">
+								<option value="">Categoria</option>
+							</select>
+							<select name="color" id="catalog-product-filter-color" class="btn-generic-small" autocomplete="off">
+								<option value="">Cor</option>
+							</select>
+							<input type="submit" class="btn-generic-small" value="Filtrar">
+						</form>
+						<br><br>
+						<div id="catalog-product-div" style="display:none">
+							<table class="tbl-info" id="catalog-product-tbl"></table>
+							<br>
+							<button id="catalogProductPrevious" autocomplete="off" disabled>&lsaquo;&lsaquo;</button>
+		                    <span id="catalogProductPageNumber"></span>
+		                    <button id="catalogProductNext" autocomplete="off" disabled>&rsaquo;&rsaquo;</button>
+						</div>
+					</div>
+				</div>
+
+				<div class="box-1" id="product-show-box" style="display:none;">
+					<table class="tbl-info" id="product-show-tbl">
+						<tr>
+							<td>Cód</td>
+							<td>Tipo</td>
+							<td>Nome</td>
+							<td>Tamanho</td>
+							<td>Cor</td>
+							<td>Qtd</td>
+							<td>Valor</td>
+						</tr>
+						<tbody id="product-show-tbody"></tbody>
+					</table>
+					<div class="box-1" id="product-show-image"></div>
+					<button id="imagePrevious" autocomplete="off" disabled>&lsaquo;&lsaquo;</button>
+				    <span id="imagePageNumber"></span>
+				    <button id="imageNext" autocomplete="off" disabled>&rsaquo;&rsaquo;</button>
+				</div>
+			</div>
+		</section>
+	</body>
+	<footer>
+        <% include ../partials/footer %>
+	</footer>
+</html>
