@@ -3,6 +3,7 @@ const router = express.Router();
 const productController = require('../app/controller/product');
 
 router.get('/', productController.index);
+router.get('/config', productController.config);
 router.post('/save', productController.save);
 router.post('/show', productController.get);
 router.post('/filter', productController.filter);

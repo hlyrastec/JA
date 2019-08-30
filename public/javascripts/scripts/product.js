@@ -179,13 +179,20 @@ function editProduct(cod){
 			product_cod: cod
 		},
 		success: (response) => {
-			document.getElementById('product-create-id').value = response.product[0].id;
-			document.getElementById('product-create-cod').value = response.product[0].cod;
-			document.getElementById('product-create-name').value = response.product[0].name;
-			document.getElementById('create-product-filter-type').value = response.product[0].type;
-			document.getElementById('create-product-filter-color').value = response.product[0].color;
-			document.getElementById('product-create-size').value = response.product[0].size;
-			document.getElementById('product-create-value').value = response.product[0].value;
+			getProductTypes('create');
+			getProductColors('create');
+
+			document.getElementById('product-create-frm').style.display = "block";
+
+			setTimeout(() => {
+				document.getElementById('product-create-id').value = response.product[0].id;
+				document.getElementById('product-create-cod').value = response.product[0].cod;
+				document.getElementById('product-create-name').value = response.product[0].name;
+				document.getElementById('create-product-filter-type').value = response.product[0].type;
+				document.getElementById('create-product-filter-color').value = response.product[0].color;
+				document.getElementById('product-create-size').value = response.product[0].size;
+				document.getElementById('product-create-value').value = response.product[0].value;
+			}, 1000);
 		}
 	});
 };

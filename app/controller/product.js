@@ -10,6 +10,12 @@ const productController = {
 		};
 		res.render('admin/product/index');
 	},
+	config: async (req, res) => {
+		if(!await userController.verifyAccess(req, res, ['dvp','prp','spt','grf','grl','crd'])){
+			return res.redirect('/login');
+		};
+		res.render('admin/product/config');
+	},
 	save: async (req, res) => {
 		if(!await userController.verifyAccess(req, res, ['dvp','grl','grf','crd'])){
 			return res.send({ unauthorized: "Usuário não autorizado."});
