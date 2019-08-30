@@ -1,7 +1,46 @@
 var product_array = [];
 
 $(function(){
-	$("#product-filter-form").on('submit', function(event){
+	$("#product-create-form").on('submit', (event) => {
+		event.preventDefault();
+		document.getElementById('product-create-submit').disabled = true;
+
+		$.ajax({
+			url: '/product/save',
+			method: 'post',
+			data: $("#product-create-form").serialize(),
+			success: (response) => {
+				if(response.unauthorized){
+					alert(response.unauthorized);
+					window.location.href = '/login';
+					return;
+				};
+				
+				if(response.msg){
+					alert(response.msg);
+					document.getElementById('product-create-submit').disabled = false;
+					return;
+				};
+
+				alert(response.done);
+				
+				document.getElementById('product-create-id').value = "";
+				document.getElementById('product-create-cod').value = "";
+				document.getElementById('create-product-filter-type').value = "";
+				document.getElementById('create-product-filter-color').value = "";
+				document.getElementById('product-create-name').value = "";
+				document.getElementById('product-create-name').value = "";
+				document.getElementById('product-create-size').value = "";
+				document.getElementById('product-create-value').value = "";
+
+				$("#product-filter-form").submit();
+
+				document.getElementById('product-create-submit').disabled = false;
+			}
+		});
+	});
+
+	$("#product-filter-form").on('submit', (event) => {
 		event.preventDefault();
 		let btn = $(this);btn.attr('disabled', true);
 
@@ -9,78 +48,33 @@ $(function(){
 			url: '/product/filter',
 			method: 'post',
 			data: $("#product-filter-form").serialize(),
-			success: function(response){
+			success: (response) => {
 				if(response.unauthorized){
 					alert(response.unauthorized);
 					return window.location.href = '/login';
 				};
 
+				let products = response.products;
 				let pageSize = 10;
 				let page = 0;
-				let products = response.products;
 
 				function paging(){
 					if(products.length){
-						if(response.location == 'catalog'){
-							var html = "<tr>";
-						    html += "<td>Cód</td>";
-						    html += "<td>Tipo</td>";
-						    html += "<td>Nome</td>";
-						    html += "<td>Tamanho</td>";
-						    html += "<td>Cor</td>";
-						    html += "<td>Valor</td>";
-						    html += "</tr>";
-						    for (let i = page * pageSize; i < products.length && i < (page + 1) * pageSize;i++){
-								html += "<tr>";
-								html += "<td id='src_product_id' hidden>"+products[i].id+"</td>";
-								html += "<td><a onclick='showProduct("+products[i].cod+")'>"+products[i].cod+"</a></td>";
-								html += "<td id='src_product_type'>"+products[i].type+"</td>";
-								html += "<td id='src_product_name'>"+products[i].name+"</td>";
-								html += "<td id='src_product_size'>"+products[i].size+"</td>";
-								html += "<td id='src_product_color'>"+products[i].color+"</td>";
-								html += "<td id='src_product_value'>"+products[i].value+"</td>";
-								html += "</tr>";
-							};
-							document.getElementById('catalog-product-tbl').innerHTML = html;
-							document.getElementById('catalog-product-div').style.display = 'block';
-				    		$('#'+response.location+'ProductPageNumber').text('' + (page + 1) + ' de ' + Math.ceil(products.length / pageSize));
-						} else if(response.location == 'admin'){
-							var html = "<tr>";
-						    html += "<td>Cód</td>";
-						    html += "<td>Tipo</td>";
-						    html += "<td>Nome</td>";
-						    html += "<td>Tamanho</td>";
-						    html += "<td>Cor</td>";
-						    html += "<td>Valor</td>";
-						    html += "</tr>";
-						    for (let i = page * pageSize; i < products.length && i < (page + 1) * pageSize;i++){
-								html += "<tr>";
-								html += "<td id='src_product_id' hidden>"+products[i].id+"</td>";
-								html += "<td><a onclick='showProduct("+products[i].cod+")'>"+products[i].cod+"</a></td>";
-								html += "<td id='src_product_type'>"+products[i].type+"</td>";
-								html += "<td id='src_product_name'>"+products[i].name+"</td>";
-								html += "<td id='src_product_size'>"+products[i].size+"</td>";
-								html += "<td id='src_product_color'>"+products[i].color+"</td>";
-								html += "<td id='src_product_value'>"+products[i].value+"</td>";
-								html += "<td ><a id='product-edit-btn'>Edit</a></td>";
-								html += "<td><a onclick='removeProduct("+products[i].cod+")'>Rem</a></td>";
-								html += "</tr>";
-							};
-							document.getElementById('admin-product-tbl').innerHTML = html;
-							document.getElementById('admin-product-div').style.display = 'block';
-				    		$('#'+response.location+'ProductPageNumber').text('' + (page + 1) + ' de ' + Math.ceil(products.length / pageSize));
+						if(response.location == 'admin'){
+							renderAdminProducts(response.location, products, pageSize, page);
+						} else if(response.location == 'catalog'){
+							renderCatalogProducts(response.location, products, pageSize, page);
 						} else if(response.location == 'kart'){
-							var html = '';
-							response.products.forEach(function(product){
-								html += '<option value="'+product.cod+'">#'+ product.cod +' | '+ product.type +' | '+ product.name +' | '+ product.size +' | '+ product.color +'</option>';
-							});
-							document.getElementById('kart-product-cod').innerHTML = html;
+							renderCashierKartProducts(response.location, products, pageSize, page);
 						};
 					} else {
-						alert('Nenhum produto encontrado.');
-						document.getElementById('admin-product-tbl').innerHTML = html;
-						document.getElementById('admin-product-div').style.display = 'none';
-				    	$('#adminProductPageNumber').text('' + (page + 1) + ' de ' + Math.ceil(products.length / pageSize));
+						if(response.location == 'admin'){
+							clearProductTable(response.location);
+						} else if(response.location == 'catalog'){
+							clearProductTable(response.location);
+						} else if(response.location == 'kart'){
+							alert("Não há produtos com estas categorias");
+						};
 					};
 				};
 
@@ -112,7 +106,149 @@ $(function(){
 			}
 		});
 	});
+
+	$("#product-type-save-btn").on('click', function(){
+		let type_name = document.getElementById('product-type-name').value.replace(/^\s+|\s+$/g, '');
+		let type_shortcut = document.getElementById('product-type-shortcut').value.replace(/^\s+|\s+$/g, '');
+		if(type_name.length < 4){
+			return alert('Nome inválido!');
+		};
+		if(type_shortcut.length < 3){
+			return alert('Abreviação inválida!');
+		};
+		$.ajax({
+			url: '/product/addType',
+			method: 'post',
+			data: {
+				type_name: type_name,
+				type_shortcut: type_shortcut
+			},
+			success: function(response){
+				if(response.unauthorized){
+					alert(response.unauthorized);
+					window.location.href = '/login';
+					return;
+				};
+
+				alert(response.done);
+			}
+		});
+	});
+
+	$("#product-color-save-btn").on('click', function(){
+		let color_name = document.getElementById('product-color-name').value.replace(/^\s+|\s+$/g, '');
+		let color_shortcut = document.getElementById('product-color-shortcut').value.replace(/^\s+|\s+$/g, '');
+		if(color_name.length < 3){
+			return alert('Nome inválido!');
+		};
+		if(color_shortcut.length < 2){
+			return alert('Abreviação inválida!');
+		};
+		$.ajax({
+			url: '/product/addColor',
+			method: 'post',
+			data: {
+				color_name: color_name,
+				color_shortcut: color_shortcut
+			},
+			success: function(response){
+				if(response.unauthorized){
+					alert(response.unauthorized);
+					window.location.href = '/login';
+					return;
+				};
+
+				alert(response.done);
+			}
+		});
+	});
 });
+
+function clearProductTable(location){
+	document.getElementById(location+"-product-tbl").innerHTML = "SEM PRODUTOS COM ESSAS CORES OU CATEGORIAS";
+	$('#'+location+'ProductPrevious').prop('disabled');
+	$('#'+location+'ProductNext').prop('disabled');
+	$('#'+location+'ProductPageNumber').text('0');
+};
+
+function editProduct(cod){
+	$.ajax({
+		url: '/product/show',
+		method: 'post',
+		data: { 
+			product_cod: cod
+		},
+		success: (response) => {
+			document.getElementById('product-create-id').value = response.product[0].id;
+			document.getElementById('product-create-cod').value = response.product[0].cod;
+			document.getElementById('product-create-name').value = response.product[0].name;
+			document.getElementById('create-product-filter-type').value = response.product[0].type;
+			document.getElementById('create-product-filter-color').value = response.product[0].color;
+			document.getElementById('product-create-size').value = response.product[0].size;
+			document.getElementById('product-create-value').value = response.product[0].value;
+		}
+	});
+};
+
+function renderAdminProducts(location, products, pageSize, page){
+	var html = "<tr>";
+	html += "<td>Cód</td>";
+	html += "<td>Tipo</td>";
+	html += "<td>Nome</td>";
+	html += "<td>Tamanho</td>";
+	html += "<td>Cor</td>";
+	html += "<td>Valor</td>";
+	html += "</tr>";
+	for (let i = page * pageSize; i < products.length && i < (page + 1) * pageSize;i++){
+		html += "<tr>";
+		html += "<td id='src_product_id' hidden>"+products[i].id+"</td>";
+		html += "<td><a onclick='showProduct("+products[i].cod+")'>"+products[i].cod+"</a></td>";
+		html += "<td id='src_product_type'>"+products[i].type+"</td>";
+		html += "<td id='src_product_name'>"+products[i].name+"</td>";
+		html += "<td id='src_product_size'>"+products[i].size+"</td>";
+		html += "<td id='src_product_color'>"+products[i].color+"</td>";
+		html += "<td id='src_product_value'>"+products[i].value+"</td>";
+		html += "<td ><a onclick='editProduct("+products[i].cod+")'>Edit</a></td>";
+		html += "<td><a onclick='removeProduct("+products[i].cod+")'>Rem</a></td>";
+		html += "</tr>";
+	};
+	document.getElementById('admin-product-tbl').innerHTML = html;
+	document.getElementById('admin-product-div').style.display = 'block';
+	$('#'+location+'ProductPageNumber').text('' + (page + 1) + ' de ' + Math.ceil(products.length / pageSize));
+};
+
+function renderCatalogProducts(location, products, pageSize, page){
+	var html = "<tr>";
+	html += "<td>Cód</td>";
+	html += "<td>Tipo</td>";
+	html += "<td>Nome</td>";
+	html += "<td>Tamanho</td>";
+	html += "<td>Cor</td>";
+	html += "<td>Valor</td>";
+	html += "</tr>";
+	for (let i = page * pageSize; i < products.length && i < (page + 1) * pageSize;i++){
+	html += "<tr>";
+	html += "<td id='src_product_id' hidden>"+products[i].id+"</td>";
+	html += "<td><a onclick='showProduct("+products[i].cod+")'>"+products[i].cod+"</a></td>";
+	html += "<td id='src_product_type'>"+products[i].type+"</td>";
+	html += "<td id='src_product_name'>"+products[i].name+"</td>";
+	html += "<td id='src_product_size'>"+products[i].size+"</td>";
+	html += "<td id='src_product_color'>"+products[i].color+"</td>";
+	html += "<td id='src_product_value'>"+products[i].value+"</td>";
+	html += "</tr>";
+	};
+	document.getElementById('catalog-product-tbl').innerHTML = html;
+	document.getElementById('catalog-product-div').style.display = 'block';
+	$('#'+location+'ProductPageNumber').text('' + (page + 1) + ' de ' + Math.ceil(products.length / pageSize));
+};
+
+function renderCashierKartProducts(location, products, pageSize, page){
+	var html = '';
+	products.forEach((product) => {
+		html += '<option value="'+product.cod+'">#'+ product.cod +' | '+ product.type +' | '+ product.name +' | '+ product.size +' | '+ product.color +'</option>';
+	});
+	document.getElementById('kart-product-cod').innerHTML = html;
+};
 
 function showProduct(cod){
 	$.ajax({
@@ -121,7 +257,7 @@ function showProduct(cod){
 		data: { 
 			product_cod: cod
 		},
-		success: function(response){
+		success: (response) => {
 			if(response.unauthorized){
 				alert(response.unauthorized);
 				window.location.href = '/login';
@@ -250,7 +386,7 @@ function removeProduct(cod){
 				};
 
 				alert(response.done);
-				$("#product-filter-btn").click();
+				$("#product-filter-form").submit();
 			}
 		});
 	};
@@ -267,7 +403,7 @@ function productAddImage(id, cod){
 		};
 		checkImage(image);
 		let img = '<img src="'+ image +'" />';
-		$(img).on("load", function() {
+		$(img).on("load", () =>  {
 			$.ajax({
 				url: '/product/addImage',
 				method: 'post',
@@ -275,7 +411,7 @@ function productAddImage(id, cod){
 					product_id: id,
 					image_url: image
 				},
-				success: function(response){
+				success: (response) => {
 					if(response.unauthorized){
 						alert(response.unauthorized);
 						window.location.href = '/login';
@@ -286,7 +422,7 @@ function productAddImage(id, cod){
 					alert(response.done);
 				}
 			});	
-		}).bind('error', function() {
+		}).bind('error', () =>  {
 			return alert('URL inválida!');
 		});
 	} else {
@@ -328,6 +464,9 @@ function getProductTypes(location){
 				html += "<option value='"+type.shortcut+"'>"+type.name+"</option>";
 			});
 
+			if(location == 'create'){
+				document.getElementById('create-product-filter-type').innerHTML = html;
+			};
 			if(location == 'admin'){
 				document.getElementById('admin-product-filter-type').innerHTML = html;
 			};
@@ -352,6 +491,9 @@ function getProductColors(location){
 				html += "<option value='"+color.shortcut+"'>"+color.name+"</option>";
 			});
 			
+			if(location == 'create'){
+				document.getElementById('create-product-filter-color').innerHTML = html;
+			};
 			if(location == 'admin'){
 				document.getElementById('admin-product-filter-color').innerHTML = html;
 			};
@@ -365,12 +507,44 @@ function getProductColors(location){
 	});
 };
 
+function listProductCategory(){
+	let productForm = document.getElementById("product-categories-box");
+	if(productForm.style.display == "none"){
+		productForm.style.display = "block";
+	} else if(productForm.style.display == "block"){
+		productForm.style.display = "none";
+	};
+
+	$.ajax({
+		url: '/product/getTypes',
+		method: 'get',
+		success: (response) => {
+			var html = "<tr>";
+			html += "<td>Id</td>";
+			html += "<td>Nome</td>";
+			html += "<td>Abrev.</td>";
+			html += "</tr>";
+
+			response.types.forEach((type) => {
+				html += "<tr>";
+				html += "<td>"+type.id+"</td>";
+				html += "<td>"+type.name+"</td>";
+				html += "<td>"+type.shortcut+"</td>";
+				// html += "<td><a>edit</a></td>";
+				// html += "<td><a>remove</a></td>";
+				html += "</tr>";
+			});
+			document.getElementById("product-categories-tbl").innerHTML = html;
+		}
+	});
+};
+
 function displayProductTypeBox(){
 	let productForm = document.getElementById("product-type-frm");
 	if(productForm.style.display == "none"){
-		productForm.style.display = "block";	
+		productForm.style.display = "block";
 	} else if(productForm.style.display == "block"){
-		productForm.style.display = "none";	
+		productForm.style.display = "none";
 	};
 };
 
@@ -379,7 +553,7 @@ function displayProductColorBox(){
 	if(productForm.style.display == "none"){
 		productForm.style.display = "block";	
 	} else if(productForm.style.display == "block"){
-		productForm.style.display = "none";	
+		productForm.style.display = "none";
 	};
 };
 

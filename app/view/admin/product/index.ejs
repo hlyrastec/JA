@@ -14,9 +14,17 @@
 				<div class="box-2">
 					<button class="btn-generic-big" onclick="displayProductTypeBox('type')">Categoria dos produtos</button>
 					<div class="box-1" id="product-type-frm" style="display:none">
-						<input class="btn-generic-big" type="text" id="product-type-name" placeholder="Nome" maxlength="15">
-						<input class="btn-generic-big" type="text" id="product-type-shortcut" placeholder="Abreviação" maxlength="8">
-						<button class="btn-generic-big" id="product-type-save-btn">Cadastrar</button>
+						<div class="box-1">
+							<button class="btn-generic-big" onclick="listProductCategory()">Listar categorias</button>
+							<div class="box-1" id="product-categories-box" style="display:none">
+								<table class="tbl-info" id="product-categories-tbl"></table>
+							</div>
+						</div>
+						<div class="box-1">
+							<input class="btn-generic-big" type="text" id="product-type-name" placeholder="Nome" maxlength="15">
+							<input class="btn-generic-big" type="text" id="product-type-shortcut" placeholder="Abreviação" maxlength="8">
+							<button class="btn-generic-big" id="product-type-save-btn">Cadastrar</button>
+						</div>
 					</div>
 				</div>
 				<div class="box-2">
@@ -30,30 +38,30 @@
 				<div class="box-2">
 					<button class="btn-generic-big" onclick="displayProductCreateFrm('create')">Cadastro de produtos</button>
 					<div class="box-1" id="product-create-frm" style="display:none">
-						<input type="hidden" id="product_id" value="0" autocomplete="off">
-						<input type="number" id="product_cod" class="btn-generic-big" placeholder="Cód do produto" min="1" max="9999" autocomplete="off">
-						<select id="product_type" class="btn-generic-big" autocomplete="off">
-							<option value="">Categoria</option>
-						</select>
-						<br>
-						<input type="text" class="btn-generic-big" id="product_name" placeholder="Nome do produto" autocomplete="off" maxlength="15">
-						<select id="product_color" class="btn-generic-big" autocomplete="off">
-							<option value="">Cor</option>
-						</select>
-						<br>
-						<select id="product_size" class="btn-generic-big" autocomplete="off">
-							<option value="">Tamanho</option>
-							<option value="ST">Sem tamanho</option>
-							<option value="PP">PP</option>
-							<option value="P">P</option>
-							<option value="M">M</option>
-							<option value="G">G</option>
-							<option value="GG">GG</option>
-						</select>
-						<input type="number" class="btn-generic-big" id="product_value" placeholder="Valor" min="1" max="9999" autocomplete="off">
-						<div class="box-1">
-							<button class="btn-generic-big" id="product-save-btn">Cadastrar</button>
-						</div>
+						<form id="product-create-form">
+							<input type="hidden" name="product_id" id="product-create-id" value="0" autocomplete="off">
+							<input type="number" name="product_cod" id="product-create-cod" class="btn-generic-big" placeholder="Cód do produto" min="1" max="9999" autocomplete="off">
+							<select name="product_type" id="create-product-filter-type" class="btn-generic-big" autocomplete="off">
+								<option value="">Categoria</option>
+							</select>
+							<br>
+							<input type="text" name="product_name" class="btn-generic-big" id="product-create-name" placeholder="Nome do produto" autocomplete="off" maxlength="15">
+							<select name="product_color" id="create-product-filter-color" class="btn-generic-big" autocomplete="off">
+								<option value="">Cor</option>
+							</select>
+							<br>
+							<select name="product_size" id="product-create-size" class="btn-generic-big" autocomplete="off">
+								<option value="">Tamanho</option>
+								<option value="ST">Sem tamanho</option>
+								<option value="PP">PP</option>
+								<option value="P">P</option>
+								<option value="M">M</option>
+								<option value="G">G</option>
+								<option value="GG">GG</option>
+							</select>
+							<input type="number" name="product_value" class="btn-generic-big" id="product-create-value" placeholder="Valor" min="1" max="9999" autocomplete="off">
+							<input type="submit" id="product-create-submit" value="Cadastrar">
+						</form>
 					</div>
 				</div>
 				<div class="box-2">
