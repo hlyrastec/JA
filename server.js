@@ -4,9 +4,9 @@ const path = require('path');
 
 const app = express();
 const server = require('http').createServer(app);
-const io = require('socket.io')(server);
+// const io = require('socket.io')(server);
 
-require('./config/socketio')(io);
+// require('./config/socketio')(io);
 
 const favicon = require('static-favicon');
 const logger = require('morgan');

@@ -1,5 +1,5 @@
 const userController = require('./user');
-const Product = require('../model/factory/product');
+const Product = require('../model/product');
 const StoreProduct = require('../model/store/product');
 const Jobs = require('../model/job');
 
@@ -25,7 +25,7 @@ const productController = {
 			id: parseInt(req.body.product_id),
 			cod: parseInt(req.body.product_cod),
 			name: req.body.product_name,
-			type: req.body.product_type,
+			category: req.body.product_category,
 			color: req.body.product_color,
 			size: req.body.product_size,
 			value: parseFloat(req.body.product_value)
@@ -33,8 +33,8 @@ const productController = {
 
 		if(!product.cod || product.cod < 1 || product.cod > 9999){return res.send({ msg: 'Código de produto inválido.' })};
 		if(!product.name || product.name.length > 15){return res.send({ msg: 'Preencha o nome do produto.' })};
-		if(!product.type || product.type.length > 20){return res.send({ msg: 'Preencha o tipo do produto.' })};
-		if(!product.color || product.type.length > 10){return res.send({ msg: 'Preencha a cor do produto.' })};
+		if(!product.category || product.category.length > 20){return res.send({ msg: 'Preencha o tipo do produto.' })};
+		if(!product.color || product.category.length > 10){return res.send({ msg: 'Preencha a cor do produto.' })};
 		if(!product.size || product.size.length > 3){return res.send({ msg: 'Preencha o tamanho do produto.' })};
 
 		if(!product.id){
@@ -104,20 +104,20 @@ const productController = {
 			return res.send({ unauthorized: "Usuário não autorizado."});
 		};
 
-		if(isNaN(req.body.cod) || req.body.cod < 0 || req.body.cod > 9999){
-			req.body.cod = "";
+		if(isNaN(req.body.product_cod) || req.body.product_cod < 0 || req.body.product_cod > 9999){
+			req.body.product_cod = "";
 		};
 
-		if(req.body.cod){
-			let product = await Product.findByCod(req.body.cod);
+		if(req.body.product_cod){
+			let product = await Product.findByCod(req.body.product_cod);
 			res.send({ products: product });
 		} else {
 			const product = {
-				type: req.body.type,
-				color: req.body.color
+				category: req.body.product_category,
+				color: req.body.product_color
 			};
 			let products = await Product.filter(product);
-			res.send({ location: req.body.location, products: products });
+			res.send({ location: req.body.product_location, products: products });
 		};
 	},
 	remove: async (req, res) => {
@@ -129,21 +129,30 @@ const productController = {
 		await StoreProduct.remove(req.body.product_cod);
 		res.send({ done: 'Produto excluído com sucesso!' });
 	},
-	addType: async (req, res) => {
+	categorySave: async (req, res) => {
 		if(!await userController.verifyAccess(req, res, ['dvp','grl','grf','crd'])){
 			return res.send({ unauthorized: "Usuário não autorizado."});
 		};
 		
-		const type = {
-			name: req.body.type_name,
-			shortcut: req.body.type_shortcut			
+		const category = {
+			name: req.body.product_category_name,
+			shortcut: req.body.product_category_shortcut			
 		};
 
-		await Product.addType(type);
+		await Product.categorySave(category);
 
 		res.send({ done: 'Categoria cadastrada com sucesso!' });
 	},
-	addColor: async (req, res) => {
+	categoryList: async (req, res) => {
+		if(!await userController.verifyAccess(req, res, ['dvp','prp','spt','grf','grl','crd','cxl','vdl','vde','etf','etl','aaf','aal'])){
+			return res.send({ unauthorized: "Usuário não autorizado."});
+		};
+		
+		const categories = await Product.categoryList();
+
+		res.send({ categories: categories });
+	},
+	colorSave: async (req, res) => {
 		if(!await userController.verifyAccess(req, res, ['dvp','grl','grf','crd'])){
 			return res.send({ unauthorized: "Usuário não autorizado."});
 		};
@@ -153,25 +162,16 @@ const productController = {
 			shortcut: req.body.color_shortcut			
 		};
 
-		await Product.addColor(color);
+		await Product.colorSave(color);
 
 		res.send({ done: 'Cor cadastrada com sucesso!' });
 	},
-	getTypes: async (req, res) => {
+	colorList: async (req, res) => {
 		if(!await userController.verifyAccess(req, res, ['dvp','prp','spt','grf','grl','crd','cxl','vdl','vde','etf','etl','aaf','aal'])){
 			return res.send({ unauthorized: "Usuário não autorizado."});
 		};
 		
-		const types = await Product.getTypes();
-
-		res.send({ types: types });
-	},
-	getColors: async (req, res) => {
-		if(!await userController.verifyAccess(req, res, ['dvp','prp','spt','grf','grl','crd','cxl','vdl','vde','etf','etl','aaf','aal'])){
-			return res.send({ unauthorized: "Usuário não autorizado."});
-		};
-		
-		const colors = await Product.getColors();
+		const colors = await Product.colorList();
 
 		res.send({ colors: colors });
 	}

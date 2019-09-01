@@ -12,27 +12,24 @@
 		<section>
 			<div class="container">
 				<div class="box-1">
-					<button class="btn-generic-big" onclick="displayProductFilterFrm('catalog')">Produtos cadastrados</button>
-					<div class="box-1" id="product-filter-box" style="display:none">
-						<form id="product-filter-form">
-							<input type="hidden" name="location" value="catalog">
-							<input type="text" name="cod" class="btn-generic-small" placeholder="Cód" autocomplete="off">
-							<select name="type" id="catalog-product-filter-type" class="btn-generic-small" autocomplete="off">
-								<option value="">Categoria</option>
-							</select>
-							<select name="color" id="catalog-product-filter-color" class="btn-generic-small" autocomplete="off">
-								<option value="">Cor</option>
-							</select>
-							<input type="submit" class="btn-generic-small" value="Filtrar">
-						</form>
-						<br><br>
-						<div id="catalog-product-div" style="display:none">
-							<table class="tbl-info" id="catalog-product-tbl"></table>
-							<br>
-							<button id="catalogProductPrevious" autocomplete="off" disabled>&lsaquo;&lsaquo;</button>
-		                    <span id="catalogProductPageNumber"></span>
-		                    <button id="catalogProductNext" autocomplete="off" disabled>&rsaquo;&rsaquo;</button>
-						</div>
+					<button class="btn-generic-big" onclick="displayProductFilterForm('product-filter-form', 'catalog')">Produtos cadastrados</button>
+					<form id="product-filter-form" class="box-1" style="display:none">
+						<input type="hidden" name="product_location" value="catalog">
+						<input type="text" name="product_cod" class="btn-generic-small" placeholder="Cód" autocomplete="off">
+						<select name="product_category" id="product-catalog-category" class="btn-generic-small" autocomplete="off">
+							<option value="">Categoria</option>
+						</select>
+						<select name="product_color" id="product-catalog-color" class="btn-generic-small" autocomplete="off">
+							<option value="">Cor</option>
+						</select>
+						<input type="submit" class="btn-generic-small" value="Filtrar">
+					</form>
+					<div id="catalog-product-div" style="display:none">
+						<table class="tbl-info" id="catalog-product-tbl"></table>
+						<br>
+						<button id="catalogProductPrevious" autocomplete="off" disabled>&lsaquo;&lsaquo;</button>
+	                    <span id="catalogProductPageNumber"></span>
+	                    <button id="catalogProductNext" autocomplete="off" disabled>&rsaquo;&rsaquo;</button>
 					</div>
 				</div>
 
@@ -49,7 +46,7 @@
 						</tr>
 						<tbody id="product-show-tbody"></tbody>
 					</table>
-					<div class="box-1" id="product-show-image"></div>
+					<div class="box-1" id="product-image-show"></div>
 					<button id="imagePrevious" autocomplete="off" disabled>&lsaquo;&lsaquo;</button>
 				    <span id="imagePageNumber"></span>
 				    <button id="imageNext" autocomplete="off" disabled>&rsaquo;&rsaquo;</button>

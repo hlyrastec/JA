@@ -1,5 +1,3 @@
-
-
 <html>
 	<head>
         <% include ../../partials/head %>
@@ -14,19 +12,28 @@
 		<section>
 			<div class="container">
 				<div class="box-2">
-					<button class="btn-generic-big" onclick="displayProductTypeBox('type')">Categoria dos produtos</button>
+					<button class="btn-generic-big" onclick="productCategoryBoxDisplay('type')">Categoria dos produtos</button>
 					<div class="box-1" id="product-type-frm" style="display:none">
+
 						<div class="box-1">
-							<button class="btn-generic-big" onclick="listProductCategory()">Listar categorias</button>
+							<button class="btn-generic-big" onclick="productCategoryList()">Listar categorias</button>
 							<div class="box-1" id="product-categories-box" style="display:none">
 								<table class="tbl-info" id="product-categories-tbl"></table>
 							</div>
 						</div>
+
+						<form class="box-1" id="product-category-save-form">
+							<input class="btn-generic-big" type="text" name="product_category_name" id="product-type-name" placeholder="Nome da categoria" maxlength="15">
+							<input class="btn-generic-big" type="text" name="product_category_name" id="product-type-shortcut" placeholder="Abreviação" maxlength="8">
+							<input type="submit" class="btn-generic-big" value="Cadastrar">
+						</form>
+<!-- 
 						<div class="box-1">
 							<input class="btn-generic-big" type="text" id="product-type-name" placeholder="Nome" maxlength="15">
 							<input class="btn-generic-big" type="text" id="product-type-shortcut" placeholder="Abreviação" maxlength="8">
 							<button class="btn-generic-big" id="product-type-save-btn">Cadastrar</button>
-						</div>
+						</div> -->
+
 					</div>
 				</div>
 				<div class="box-2">
