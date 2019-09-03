@@ -1,5 +1,5 @@
 const userController = require('../user');
-const Product = require('../../model/store/product');
+const Product = require('../../model/product');
 const Jobs = require('../../model/job');
 
 const cashierController = {

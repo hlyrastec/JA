@@ -163,7 +163,7 @@ function showStoreSale(id){
 			html += "<td>Status: "+response.sale[0].status+"</td>";
 			html += "</tr>";
 			html += "<tr>";
-			html += "<td>Data: "+response.sale[0].date+"</td>";
+			html += "<td>Data: "+response.sale[0].full_date+"</td>";
 			html += "<td>Pag: "+response.sale[0].payment_method+" | "+ response.sale[0].payment_installment+"x</td>";
 			html += "<td>Valor: "+response.sale[0].final_value+"</td>";
 			html += "<td>Vendedor: "+ response.sale[0].user+"</td>";
@@ -181,7 +181,7 @@ function showStoreSale(id){
 			html += "</tr>";
 			response.sale[0].products.forEach(function(product){
 				html += "<tr>";
-				html += "<td>"+ product.type +" "+ product.name+" "+ product.color+" "+ product.size+"</td>";
+				html += "<td>"+ product.category +" "+ product.name+" "+ product.color+" "+ product.size+"</td>";
 				html += "<td>"+ product.amount +"</td>";
 				html += "<td>"+ product.value +"</td>";
 				html += "<td></td>";

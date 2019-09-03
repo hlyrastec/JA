@@ -47,63 +47,40 @@ $(() => {
 	});
 });
 
-// function productCategoryList(location, categories){
-// 	var html = "";
-// 	html += "<option value=''>Categoria</option>";
-// 	categories.forEach((category) => {
-// 		html += "<option value='"+category.shortcut+"'>"+category.name+"</option>";
-// 	});
+//
+	// Mostra no select do local a lista de categoriase cores no form de busca de produtos
+//
+function productCategoryList(form, location){
+	$.ajax({
+		url: '/product/categoryList',
+		method: 'get',
+		success: (response) => {
+			var html = "";
+			html += "<option value=''>Categoria</option>";
+			response.categories.forEach((category) => {
+				html += "<option value='"+category.shortcut+"'>"+category.name+"</option>";
+			});
 
-// 	if(location == 'create'){
-// 		document.getElementById('create-product-filter-category').innerHTML = html;
-// 	};
-// 	if(location == 'admin'){
-// 		document.getElementById('admin-product-filter-category').innerHTML = html;
-// 	};
-// 	if(location == 'catalog'){
-// 		document.getElementById('catalog-product-filter-category').innerHTML = html;
-// 	};
-// 	if(location == 'kart'){
-// 		document.getElementById('kart-product-filter-category').innerHTML = html;
-// 	};
-// };
-
-function productColorBoxDisplay(){
-	let productForm = document.getElementById("product-color-frm");
-	if(productForm.style.display == "none"){
-		productForm.style.display = "block";	
-	} else if(productForm.style.display == "block"){
-		productForm.style.display = "none";
-	};
+			document.getElementById("product-"+location+"-category").innerHTML = html;
+		}
+	});
 };
 
-// function getProductColors(location){
-// 	$.ajax({
-// 		url: '/product/colorList',
-// 		method: 'get',
-// 		success: (response) => {
-// 			var html = "";
-// 			html += "<option value=''>Cor</option>";
-// 			response.colors.forEach((color) => {
-// 				html += "<option value='"+color.shortcut+"'>"+color.name+"</option>";
-// 			});
-			
-// 			if(location == 'create'){
-// 				document.getElementById('create-product-filter-color').innerHTML = html;
-// 			};
-// 			if(location == 'admin'){
-// 				document.getElementById('admin-product-filter-color').innerHTML = html;
-// 			};
-// 			if(location == 'catalog'){
-// 				document.getElementById('catalog-product-filter-color').innerHTML = html;
-// 			};
-// 			if(location == 'kart'){
-// 				document.getElementById('kart-product-filter-color').innerHTML = html;
-// 			};
-// 		}
-// 	});
-// };
+function productColorList(form, location){
+	$.ajax({
+		url: '/product/colorList',
+		method: 'get',
+		success: (response) => {
+			var html = "";
+			html += "<option value=''>Color</option>";
+			response.colors.forEach((color) => {
+				html += "<option value='"+color.shortcut+"'>"+color.name+"</option>";
+			});
 
+			document.getElementById("product-"+location+"-color").innerHTML = html;
+		}
+	});
+};
 
 // function listProductCategory(){
 // 	let productForm = document.getElementById("product-categories-box");

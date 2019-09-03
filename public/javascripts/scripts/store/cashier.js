@@ -1,10 +1,14 @@
+var cashier_product_array = [];
+
 const Cashier = {
 	discount: 0,
 	total: 0,
 	final: 0
 };
 
+// Funções do caixa
 $(function(){
+	// Alteração de box entre criação ou busca de cliente no caixa
 	$("#change-customer-sale-form").on("change", function(event){
 		let customerSaleSel = document.getElementById('change-customer-sale-form'); 
 		if(customerSaleSel.value =='search-customer'){
@@ -19,17 +23,14 @@ $(function(){
 		};
 	});
 
-	  /////////////////////
-	 /// KART FUNCTIONS //
-	/////////////////////
-	$('#kart-product-select-form').on('submit', function(event){
+	// Adicionar produto ao carrinho do caixa e todas suas verificações
+	$('#cashier-kart-product-select-form').on('submit', function(event){
 		event.preventDefault();
 
 		let cod = document.getElementById('kart-product-cod').value;
 		let amount = parseInt(document.getElementById('kart-product-amount').value);
 		
 		if(cod!='' && cod!='0'){
-			// continue;
 		} else {
 			alert('Favor selecionar um produto');
 			return;
@@ -44,15 +45,13 @@ $(function(){
 		};
 		
 		if(amount!='' && amount>0){
-			// continue
 		} else {
 			alert('Favor inserir a quantidade');
 			return;
 		};
 
-		// verify product in storage
 		$.ajax({
-			url: '/store/product/get',
+			url: '/product/get',
 			method: 'post',
 			data: { 
 				product_cod: cod
@@ -66,7 +65,7 @@ $(function(){
 				let product = {
 					id: response.product[0].id,
 					cod: response.product[0].cod,
-					type: response.product[0].type,
+					category: response.product[0].category,
 					name: response.product[0].name,
 					color: response.product[0].color,
 					size: response.product[0].size,
@@ -78,19 +77,19 @@ $(function(){
 				cashier_product_array.push(product);
 
 
-				let product_tbody = document.getElementById('cashier-product-tbl-tbody');
+				let product_tbody = document.getElementById('cashier-kart-product-tbl-tbody');
 				
 				let html = "<tr>";
-				html += "<td id='cashier-product-id' hidden>"+ product.id +"</td>";
-				html += "<td id='cashier-product-cod' hidden>"+product.cod+"</td>";
+				html += "<td id='cashier-kart-product-id' hidden>"+ product.id +"</td>";
+				html += "<td id='cashier-kart-product-cod' hidden>"+product.cod+"</td>";
 				html += "<td><a onclick='showProduct("+product.cod+")'>"+product.cod+"</a></td>";
-				html += "<td id='cashier-product-info'>"+ product.type +" | "+ product.name +" | "+ product.color +" | "+ product.size +"</td>";
-				html += "<td id='cashier-product-amount-remove-btn'><a>-</a></td>";
-				html += "<td id='cashier-product-amount'>"+ product.amount +"</td>";
-				html += "<td id='cashier-product-amount-add-btn'><a>+</a></td>";
-				html += "<td id='cashier-product-value'>"+ product.value +"</td>";
-				html += "<td id='cashier-product-total_value'>"+ product.total_value +"</td>";
-				html += "<td><a id='cashier-product-remove-btn'>rem</a></td>";
+				html += "<td id='cashier-kart-product-info'>"+ product.category +" | "+ product.name +" | "+ product.color +" | "+ product.size +"</td>";
+				html += "<td id='cashier-kart-product-amount-remove-btn'><a>-</a></td>";
+				html += "<td id='cashier-kart-product-amount'>"+ product.amount +"</td>";
+				html += "<td id='cashier-kart-product-amount-add-btn'><a>+</a></td>";
+				html += "<td id='cashier-kart-product-value'>"+ product.value +"</td>";
+				html += "<td id='cashier-kart-product-total_value'>"+ product.total_value +"</td>";
+				html += "<td><a id='cashier-kart-product-remove-btn'>rem</a></td>";
 				html += "</tr>";
 
 				product_tbody.innerHTML += html;
@@ -99,48 +98,49 @@ $(function(){
 		});
 	});
 
-	$('table').on('click', '#cashier-product-amount-remove-btn', function(){
-		let rowEl = $(this).closest('tr');
-		let product_id = rowEl.find('#cashier-product-id').text();
 
-		if(parseInt(rowEl.find('#cashier-product-amount').text())>1){
+	$('table').on('click', '#cashier-kart-product-amount-remove-btn', function(){
+		let rowEl = $(this).closest('tr');
+		let product_id = rowEl.find('#cashier-kart-product-id').text();
+
+		if(parseInt(rowEl.find('#cashier-kart-product-amount').text())>1){
 			for(i in cashier_product_array){
 				if(product_id == cashier_product_array[i].id){
-					cashier_product_array[i].total_value = cashier_product_array[i].value * (parseInt(rowEl.find('#cashier-product-amount').text()) - 1);
-					rowEl.find('#cashier-product-total_value').text(cashier_product_array[i].total_value);
+					cashier_product_array[i].total_value = cashier_product_array[i].value * (parseInt(rowEl.find('#cashier-kart-product-amount').text()) - 1);
+					rowEl.find('#cashier-kart-product-total_value').text(cashier_product_array[i].total_value);
 				};
 			};
-			rowEl.find('#cashier-product-amount').text(parseInt(rowEl.find('#cashier-product-amount').text()) - 1);
+			rowEl.find('#cashier-kart-product-amount').text(parseInt(rowEl.find('#cashier-kart-product-amount').text()) - 1);
 			cashier_product_array.forEach(function(product){
 				if(product.id==product_id){
-					product.amount = parseInt(rowEl.find('#cashier-product-amount').text());
+					product.amount = parseInt(rowEl.find('#cashier-kart-product-amount').text());
 				};
 			});
 			updateCashier();
 		};
 	});
 
-	$('table').on('click', '#cashier-product-amount-add-btn', function(){
+	$('table').on('click', '#cashier-kart-product-amount-add-btn', function(){
 		let rowEl = $(this).closest('tr');
-		let product_id = rowEl.find('#cashier-product-id').text();
-		let product_cod = rowEl.find('#cashier-product-cod').text();
+		let product_id = rowEl.find('#cashier-kart-product-id').text();
+		let product_cod = rowEl.find('#cashier-kart-product-cod').text();
 
 		$.ajax({
-			url: '/store/product/get',
+			url: '/product/get',
 			method: 'post',
 			data: { product_cod: product_cod },
 			success: function(response){
-				// if(response.product[0].amount>=parseInt(rowEl.find('#cashier-product-amount').text())+1){
+				// if(response.product[0].amount>=parseInt(rowEl.find('#cashier-kart-product-amount').text())+1){
 					for(i in cashier_product_array){
 						if(product_cod == cashier_product_array[i].cod){
-							cashier_product_array[i].total_value = cashier_product_array[i].value * (parseInt(rowEl.find('#cashier-product-amount').text()) + 1);
-							rowEl.find('#cashier-product-total_value').text(cashier_product_array[i].total_value);
+							cashier_product_array[i].total_value = cashier_product_array[i].value * (parseInt(rowEl.find('#cashier-kart-product-amount').text()) + 1);
+							rowEl.find('#cashier-kart-product-total_value').text(cashier_product_array[i].total_value);
 						};
 					};
-					rowEl.find('#cashier-product-amount').text(parseInt(rowEl.find('#cashier-product-amount').text()) + 1);
+					rowEl.find('#cashier-kart-product-amount').text(parseInt(rowEl.find('#cashier-kart-product-amount').text()) + 1);
 					cashier_product_array.forEach(function(product){
 						if(product.id==product_id){
-							product.amount = parseInt(rowEl.find('#cashier-product-amount').text());
+							product.amount = parseInt(rowEl.find('#cashier-kart-product-amount').text());
 						};
 					});
 					updateCashier();
@@ -151,9 +151,9 @@ $(function(){
 		});
 	});
 
-	$('table').on('click', '#cashier-product-remove-btn', function(){
+	$('table').on('click', '#cashier-kart-product-remove-btn', function(){
 		let rowEl = $(this).closest('tr');
-		let product_id = rowEl.find('#cashier-product-id').text();
+		let product_id = rowEl.find('#cashier-kart-product-id').text();
 		rowEl[0].parentNode.removeChild(rowEl[0]);
 
 		let newArray = [];
@@ -201,7 +201,7 @@ function clearCashier(){
 	document.getElementById('store-sale-payment-method').value = "";
 	document.getElementById('store-sale-payment-installment').value = "1";
 
-	document.getElementById('cashier-product-tbl-tbody').innerHTML = "";
+	document.getElementById('cashier-kart-product-tbl-tbody').innerHTML = "";
 
 	document.getElementById('cashier-discount-update-value').value = "";
 
@@ -239,7 +239,7 @@ function printCashierSale(sale){
 	html += "</tr>";
 	sale.products.forEach(function(product){
 		html += "<tr>";
-		html += "<td>"+ product.type+" "+ product.name+" "+ product.color+" "+ product.size+"</td>";
+		html += "<td>"+ product.category+" "+ product.name+" "+ product.color+" "+ product.size+"</td>";
 		html += "<td>"+ product.amount+"</td>";
 		html += "<td>"+ product.value+"</td>";
 		html += "<td></td>";

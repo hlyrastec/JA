@@ -3,7 +3,7 @@ const Lib = require('../../../config/lib');
 const userController = require('../user');
 const Jobs = require('../../model/job');
 
-const Product = require('../../model/store/product');
+const Product = require('../../model/product');
 const Customer = require('../../model/store/customer');
 const Sale = require('../../model/store/sale');
 
@@ -55,7 +55,7 @@ const saleController = {
 			let product = {
 				sale_id: sale.id,
 				id: sale.products[i].id,
-				type: sale.products[i].type,
+				category: sale.products[i].category,
 				name: sale.products[i].name,
 				color: sale.products[i].color,
 				size: sale.products[i].size,
@@ -77,7 +77,7 @@ const saleController = {
 
 		for(i in sale.products){
 			var product = await Product.findById(sale.products[i].product_id);
-			sale.products[i].type = product[0].type;			
+			sale.products[i].category = product[0].category;			
 			sale.products[i].name = product[0].name;			
 			sale.products[i].color = product[0].color;			
 			sale.products[i].size = product[0].size;

@@ -1,3 +1,7 @@
+function hideProduct(){
+	document.getElementById('product-show-box').style.display = "none";
+};
+
 function clearProductTable(location){
 	document.getElementById(location+"-product-tbl").innerHTML = "SEM PRODUTOS COM ESSAS CORES OU CATEGORIAS";
 	$('#'+location+'ProductPrevious').prop('disabled');
@@ -5,96 +9,9 @@ function clearProductTable(location){
 	$('#'+location+'ProductPageNumber').text('0');
 };
 
-
-
-function hideProduct(){
-	document.getElementById('product-show-box').style.display = "none";
-};
-
-function removeProduct(cod){
-	let r = confirm('Deseja realmente excluir o produto?');
-	if(r){
-		$.ajax({
-			url: '/product/remove',
-			method: 'post',
-			data: {
-				product_cod: cod
-			},
-			success: function(response){
-				if(response.unauthorized){
-					alert(response.unauthorized);
-					window.location.href = '/login';
-					return;
-				};
-
-				alert(response.done);
-				$("#product-filter-form").submit();
-			}
-		});
-	};
-};
-
-function productAddImage(id, cod){
-	let image = prompt("Preencha com a URL da imagem");
-	if(image){
-		if(image.length < 7){
-			return alert('URL inválida!');
-		};
-		if(image.length > 200){
-			return alert('URL inválida!');
-		};
-		checkImage(image);
-		let img = '<img src="'+ image +'" />';
-		$(img).on("load", () =>  {
-			$.ajax({
-				url: '/product/addImage',
-				method: 'post',
-				data: {
-					product_id: id,
-					image_url: image
-				},
-				success: (response) => {
-					if(response.unauthorized){
-						alert(response.unauthorized);
-						window.location.href = '/login';
-						return;
-					};
-
-					showProduct(cod);
-					alert(response.done);
-				}
-			});
-		}).bind('error', () =>  {
-			return alert('URL inválida!');
-		});
-	} else {
-		return;
-	};
-};
-
-function productRemoveImage(id, cod){
-	let r = confirm("Deseja realmente excluir a image?");
-	if(r){
-		$.ajax({
-			url: '/product/removeImage',
-			method: 'post',
-			data: {
-				image_id: id
-			},
-			success: function(response){
-				if(response.unauthorized){
-					alert(response.unauthorized);
-					window.location.href = '/login';
-					return;
-				};
-
-				showProduct(cod);
-				alert(response.done);
-			}
-		});
-	};
-};
-
+//
+	// Mostrar a tabela de produtos na área de administração
+//
 function renderAdminProducts(location, products, pageSize, page){
 	var html = "<tr>";
 	html += "<td>Cód</td>";
@@ -153,26 +70,4 @@ function renderCashierKartProducts(location, products, pageSize, page){
 		html += '<option value="'+product.cod+'">#'+ product.cod +' | '+ product.category +' | '+ product.name +' | '+ product.size +' | '+ product.color +'</option>';
 	});
 	document.getElementById('kart-product-cod').innerHTML = html;
-};
-
-
-function displayProductFilterFrm(location){
-	let productForm = document.getElementById("product-filter-box");
-	if(productForm.style.display == "none"){
-		productForm.style.display = "block";	
-	} else if(productForm.style.display == "block"){
-		productForm.style.display = "none";	
-	};
-};
-
-function displayProductSelectFrm(location){
-	let productForm = document.getElementById("product-select-box");
-	if(productForm.style.display == "none"){
-		let product_categories = productCategoryList();
-		console.log(product_categories);
-		// getProductColors(location);
-		productForm.style.display = "block";	
-	} else if(productForm.style.display == "block"){
-		productForm.style.display = "none";	
-	};
 };

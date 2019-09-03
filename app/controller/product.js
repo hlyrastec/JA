@@ -1,6 +1,5 @@
 const userController = require('./user');
 const Product = require('../model/product');
-const StoreProduct = require('../model/store/product');
 const Jobs = require('../model/job');
 
 const productController = {
@@ -41,8 +40,7 @@ const productController = {
 			var row = await Product.findByCod(product.cod);
 			if(row.length){return res.send({ msg: 'Este código de produto já está cadastrado.' })};
 			
-			await Product.save(product);
-			var row = await StoreProduct.save(product);
+			var row = await Product.save(product);
 		} else {
 			var row = await Product.findByCod(product.cod);
 			if(row.length){
@@ -50,9 +48,8 @@ const productController = {
 					return res.send({ msg: 'Este código de produto já está cadastrado.' });
 				};
 			};
-
-			await Product.update(product);
-			var row = await StoreProduct.update(product);
+			
+			var row = await Product.update(product);
 		};
 
 		let newProduct = await Product.findById(row.insertId);
@@ -110,7 +107,7 @@ const productController = {
 
 		if(req.body.product_cod){
 			let product = await Product.findByCod(req.body.product_cod);
-			res.send({ products: product });
+			res.send({ location: req.body.product_location, products: product });
 		} else {
 			const product = {
 				category: req.body.product_category,
@@ -126,7 +123,6 @@ const productController = {
 		};
 		
 		await Product.remove(req.body.product_cod);
-		await StoreProduct.remove(req.body.product_cod);
 		res.send({ done: 'Produto excluído com sucesso!' });
 	},
 	categorySave: async (req, res) => {
