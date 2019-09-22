@@ -53,6 +53,9 @@ const productController = {
 		};
 
 		let newProduct = await Product.findById(row.insertId);
+
+		await Storage.save({factory_id:1,product_id:row.insertId,amount:0});
+
 		res.send({ done: 'Produto cadastrado com sucesso!', product: newProduct });
 	},
 	addImage: async (req, res) => {

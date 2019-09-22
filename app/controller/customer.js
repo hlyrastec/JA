@@ -1,7 +1,7 @@
-const userController = require('../user');
-const Jobs = require('../../model/job');
+const userController = require('./user');
+const Jobs = require('../model/job');
 
-const Customer = require('../../model/store/customer');
+const Customer = require('../model/customer');
 
 const customerController = {
 	save: async (req, res) => {

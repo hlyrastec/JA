@@ -22,7 +22,7 @@ $(function(){
 		};
 
 		$.ajax({
-			url: '/store/customer/save',
+			url: '/customer/save',
 			method: 'post',
 			data: {
 				customer_name: customer_name,
@@ -58,7 +58,7 @@ $(function(){
 		let cpf = document.getElementById('src-customer-cpf').value;
 
 		$.ajax({
-			url: '/store/customer/findByCpf',
+			url: '/customer/findByCpf',
 			method: 'post',
 			data: {
 				customer_cpf: cpf,

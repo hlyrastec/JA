@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const userController = require('../app/controller/user');
-const customerController = require('../app/controller/store/customer');
+const customerController = require('../app/controller/customer');
 const cashierController = require('../app/controller/store/cashier');
-const saleController = require('../app/controller/store/sale');
+const orderController = require('../app/controller/store/order');
 
 router.get('/', userController.verify, (req, res) => {
 	if(req.user.access == ['aaa'] || req.user.access == ['aas']){
@@ -17,9 +17,9 @@ router.post('/customer/findByCpf', customerController.findByCpf);
 
 router.get('/cashier', cashierController.index);
 
-router.get('/sales', saleController.index);
-router.post('/sale/save', saleController.save);
-router.post('/sale/filter', saleController.filter);
-router.post('/sale/get', saleController.get);
+router.get('/orders', orderController.index);
+router.post('/order/save', orderController.save);
+router.post('/order/filter', orderController.filter);
+router.post('/order/get', orderController.get);
 
 module.exports = router;

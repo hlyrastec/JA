@@ -9,12 +9,12 @@ const Cashier = {
 // Funções do caixa
 $(function(){
 	// Alteração de box entre criação ou busca de cliente no caixa
-	$("#change-customer-sale-form").on("change", function(event){
-		let customerSaleSel = document.getElementById('change-customer-sale-form'); 
-		if(customerSaleSel.value =='search-customer'){
+	$("#change-customer-order-form").on("change", function(event){
+		let customerorderSel = document.getElementById('change-customer-order-form'); 
+		if(customerorderSel.value =='search-customer'){
 			document.getElementById('search-customer-box').style.display = 'block';
 			document.getElementById('create-customer-box').style.display = 'none';
-		} else if(customerSaleSel.value =='create-customer'){
+		} else if(customerorderSel.value =='create-customer'){
 			document.getElementById('search-customer-box').style.display = 'none';
 			document.getElementById('create-customer-box').style.display = 'block';
 		} else {
@@ -76,7 +76,6 @@ $(function(){
 
 				cashier_product_array.push(product);
 
-
 				let product_tbody = document.getElementById('cashier-kart-product-tbl-tbody');
 				
 				let html = "<tr>";
@@ -86,7 +85,7 @@ $(function(){
 				html += "<td id='cashier-kart-product-info'>"+ product.category +" | "+ product.name +" | "+ product.color +" | "+ product.size +"</td>";
 				html += "<td id='cashier-kart-product-amount-remove-btn'><a>-</a></td>";
 				html += "<td id='cashier-kart-product-amount'>"+ product.amount +"</td>";
-				html += "<td id='cashier-kart-product-amount-add-btn'><a>+</a></td>";
+				html += "<td id='cashier-kart-product-amount-add-btn'><a class='kart-product-amount-btn'>+</a></td>";
 				html += "<td id='cashier-kart-product-value'>"+ product.value +"</td>";
 				html += "<td id='cashier-kart-product-total_value'>"+ product.total_value +"</td>";
 				html += "<td><a id='cashier-kart-product-remove-btn'>rem</a></td>";
@@ -197,9 +196,9 @@ function clearCashier(){
 	Cashier.final = 0;
 	cashier_product_array = [];
 
-	document.getElementById('store-sale-customer').innerHTML = "<option value=''>Cliente</option>";
-	document.getElementById('store-sale-payment-method').value = "";
-	document.getElementById('store-sale-payment-installment').value = "1";
+	document.getElementById('store-order-customer').innerHTML = "<option value=''>Cliente</option>";
+	document.getElementById('store-order-payment-method').value = "";
+	document.getElementById('store-order-payment-installment').value = "1";
 
 	document.getElementById('cashier-kart-product-tbl-tbody').innerHTML = "";
 
@@ -208,7 +207,7 @@ function clearCashier(){
 	updateCashier();
 };
 
-function printCashierSale(sale){
+function printCashierOrder(order){
 	var html = "<div style='display:inline-block;text-align:center;page-break-inside:avoid;page-break-after:auto;border-top:1px solid black;border-bottom:1px solid black;width:650px;margin-right:15px;padding:10px;'>";
 
 	html += "<img src='/images/jaicon.png'><br>";
@@ -216,14 +215,14 @@ function printCashierSale(sale){
 
 	html += "<table border=1 cellspacing=0 cellpadding=2 style='text-align:center;width:100%;font-size:12px;'>";
 	html += "<tr>";
-	html += "<td>Cód:"+ sale.id +"</td>";
-	html += "<td>Cliente: "+ sale.customer_name+"</td>";
-	html += "<td>CPF: "+ sale.customer_cpf+"</td>";
+	html += "<td>Cód:"+ order.id +"</td>";
+	html += "<td>Cliente: "+ order.customer_name+"</td>";
+	html += "<td>CPF: "+ order.customer_cpf+"</td>";
 	html += "</tr>";
 	html += "<tr>";
-	html += "<td>Data: "+ sale.full_date+"</td>";
-	html += "<td>Pag: "+ sale.payment_method+" | "+ sale.payment_installment+"x</td>";
-	html += "<td>Vendedor: "+ sale.user+"</td>";
+	html += "<td>Data: "+ order.full_date+"</td>";
+	html += "<td>Pag: "+ order.payment_method+" | "+ order.payment_installment+"x</td>";
+	html += "<td>Vendedor: "+ order.user+"</td>";
 	html += "</tr>";
 	html += "</table>";
 
@@ -237,7 +236,7 @@ function printCashierSale(sale){
 	html += "<td></td>";
 	html += "<td></td>";
 	html += "</tr>";
-	sale.products.forEach(function(product){
+	order.products.forEach(function(product){
 		html += "<tr>";
 		html += "<td>"+ product.category+" "+ product.name+" "+ product.color+" "+ product.size+"</td>";
 		html += "<td>"+ product.amount+"</td>";
@@ -259,7 +258,7 @@ function printCashierSale(sale){
 	html += "<td></td>";
 	html += "<td></td>";
 	html += "<td>Valor total:</td>";
-	html += "<td>"+ sale.total_value +"</td>";
+	html += "<td>"+ order.total_value +"</td>";
 	html += "</tr>";
 
 	html += "<tr>";
@@ -272,10 +271,10 @@ function printCashierSale(sale){
 
 	html += "<tr>";
 	html += "<td></td>";
-	html += "<td>"+ sale.discount+"</td>";
+	html += "<td>"+ order.discount+"</td>";
 	html += "<td></td>";
 	html += "<td></td>";
-	html += "<td>- "+ parseInt(sale.discount) +"</td>";
+	html += "<td>- "+ parseInt(order.discount) +"</td>";
 	html += "</tr>";
 
 	html += "<tr>";
@@ -290,7 +289,7 @@ function printCashierSale(sale){
 	html += "<td></td>";
 	html += "<td></td>";
 	html += "<td>valor:</td>";
-	html += "<td style='font-weight:bold;font-weight:15px;'>"+ sale.final_value+"</td>";
+	html += "<td style='font-weight:bold;font-weight:15px;'>"+ order.final_value+"</td>";
 	html += "</tr>";
 
 	html += "</table>";

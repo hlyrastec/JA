@@ -15,6 +15,5 @@ module.exports = {
         'port': '3306',
         'user': 'hlyrastec',
         'password': 'root1234'
-    },
-	'database': 'lfsdb'
+    }
 };

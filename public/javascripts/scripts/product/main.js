@@ -64,7 +64,11 @@ $(function(){
 							renderAdminProducts(response.location, products, pageSize, page);
 						} else if(response.location == 'catalog'){
 							renderCatalogProducts(response.location, products, pageSize, page);
+						} else if(response.location == 'factory-storage'){
+							renderFactoryStorageProducts(response.location, products, pageSize, page);
 						} else if(response.location == 'kart'){
+							renderKartProducts(response.location, products, pageSize, page);
+						} else if(response.location == 'cashier-kart'){
 							renderCashierKartProducts(response.location, products, pageSize, page);
 						};
 					} else {
@@ -72,7 +76,11 @@ $(function(){
 							clearProductTable(response.location);
 						} else if(response.location == 'catalog'){
 							clearProductTable(response.location);
+						} else if(response.location == 'factory-storage'){
+							clearProductTable(response.location);
 						} else if(response.location == 'kart'){
+							alert("Não há produtos com estas categorias");
+						} else if(response.location == 'cashier-kart'){
 							alert("Não há produtos com estas categorias");
 						};
 					};

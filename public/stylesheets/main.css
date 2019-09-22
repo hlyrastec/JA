@@ -5,11 +5,11 @@
 }
 
 header {
-	background-color: black;
+	background-image: linear-gradient(to right, #fff, #999);
 	width: 100%;
 	height: auto;
 	font: 100% Arial;
-	color: white;
+	color: #000;
 	padding: 10px;
 	display: flex;
 	box-sizing: border-box;
@@ -18,7 +18,7 @@ header {
 }
 
 header a {
-	color: white;
+	color: #000;
 	font-weight: bold;
 }
 

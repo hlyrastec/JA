@@ -1,0 +1,94 @@
+<html>
+	<head>
+        <% include ../../partials/head %>
+	</head>
+	<body>
+		<header>
+			<a href="/"><img src="/images/favicon.png" class="favicon"></a>
+			<div>
+    			<a onclick="let r = confirm('deseja sair?');if(r==true){window.location.href='/logout'}">Sair</a>
+			</div>
+		</header>
+		<section>
+			<div class="container">
+
+				<div class="box-2">
+                	<button class="btn-generic-big" onclick="displayProductFilterForm('product-filter-form', 'kart')">Filtro de produtos</button>
+					<form id="product-filter-form" class="box-1" style="display:none">
+						<div class="box-1">
+							<input type="hidden" name="product_location" value="kart">
+							<input type="text" name="product_cod" id="product-kart-cod" class="btn-generic-small" placeholder="Cód" autocomplete="off">
+							<select name="product_category" id="product-kart-category" class="btn-generic-small">
+								<option value="">Categoria</option>
+							</select>
+							<select name="product_color" id="product-kart-color" class="btn-generic-small">
+								<option value="">Cor</option>
+							</select>
+							<button type="submit" class="btn-generic-small">Filtrar</button>
+						</div>
+	                </form>
+	                <form id="kart-product-select-form">
+						<div class="box-1">
+						    <select name="product_cod" id="kart-product-cod" class="btn-generic-medium" name="product">
+						      <option value="">Produto</option>
+						    </select>
+						    <input type="number" name="amount" id="kart-product-amount" class="btn-generic-small" placeholder="Quantidade">
+						    <input type="submit" class="btn-generic-small" value="Adicionar">
+	                	</div>
+	                </form>
+                </div>
+
+                <div class="box-2">
+                	<strong>Produtos sendo retirados do estoque</strong>
+                	<div class="box-1">
+						<table id="kart-product-tbl" class="tbl-generic">
+							<tr>
+								<td>Cod</td>
+								<td>Informação do produto</td>
+								<td class="tbl-amount-cell"></td>
+								<td>Qtd</td>
+								<td class="tbl-amount-cell"></td>
+							</tr>
+							<tbody id="kart-product-tbl-tbody"></tbody>
+						</table>
+                	</div>
+                	<div class="box-1">
+                		<form id="factory-storage-withdraw-form">
+	                		<select class="btn-generic-big" id="factory-storage-withdraw-origin">
+	                			<option value="">Motivo da saída</option>
+	                			<option value="Venda Loja">Venda Loja</option>
+	                			<option value="E-commerce">E-commerce</option>
+	                			<option value="Defeito">Defeito</option>
+	                			<option value="Troca">Troca</option>
+	                		</select>
+	            			<input type="submit" class="btn-generic-big" style="background-color:#9bedbf;color:black;" value="Confirmar entrada">
+                		</form>
+                	</div>
+                </div>
+
+                <div class="box-1" id="product-show-box" style="display:none;">
+					<table class="tbl-info" id="product-show-tbl">
+						<tr>
+							<td>Cód</td>
+							<td>Tipo</td>
+							<td>Nome</td>
+							<td>Tamanho</td>
+							<td>Cor</td>
+							<td>Qtd</td>
+							<td>Valor</td>
+						</tr>
+						<tbody id="product-show-tbody"></tbody>
+					</table>
+					<div class="box-1" id="product-image-show"></div>
+					<button id="imagePrevious" autocomplete="off" disabled>&lsaquo;&lsaquo;</button>
+				    <span id="imagePageNumber"></span>
+				    <button id="imageNext" autocomplete="off" disabled>&rsaquo;&rsaquo;</button>
+				</div>
+
+			</div>
+		</section>
+	</body>
+	<footer>
+        <% include ../../partials/footer %>
+	</footer>
+</html>

@@ -163,4 +163,17 @@ $(function(){
 			chatListBox.style.display = "none";
 		};
 	});
+
+	$("#factory-create-form").on('submit', (e) => {
+		e.preventDefault();
+		$.ajax({
+			url: '/admin/createFactory',
+			method: 'post',
+			data: $('#factory-create-form').serialize(),
+			success: (response) => {
+				console.log(response);
+			}
+		});
+	});
+
 });

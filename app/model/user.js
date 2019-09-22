@@ -11,53 +11,53 @@ const User = function(){
 };
 
 User.list = () => {
-	let query = "SELECT * FROM lfsdb.users;";
+	let query = "SELECT * FROM ERP.users;";
 	return db(query);
 };
 
 User.findById = (id) => {
-	let query = "SELECT * FROM lfsdb.users WHERE id='"+id+"';";
+	let query = "SELECT * FROM ERP.users WHERE id='"+id+"';";
 	return db(query);
 };
 
 User.findByUsername = (user) => {
-	let query = "SELECT * FROM lfsdb.users WHERE username='"+user.username+"';";
+	let query = "SELECT * FROM ERP.users WHERE username='"+user.username+"';";
 	return db(query);
 };
 
 User.findByEmail = (user) => {
-	let query = "SELECT * FROM lfsdb.users WHERE email='"+user.email+"';";
+	let query = "SELECT * FROM ERP.users WHERE email='"+user.email+"';";
 	return db(query);
 };
 
 User.updateAccess = (user) => {
-	let query = "UPDATE lfsdb.users SET access='"+user.newAccess+"', job='"+user.newJob+"' WHERE id='"+user.id+"';";
+	let query = "UPDATE ERP.users SET access='"+user.newAccess+"', job='"+user.newJob+"' WHERE id='"+user.id+"';";
 	return db(query);
 };
 
 User.updatePassword = (user) => {
-	let query = "UPDATE lfsdb.users SET password='"+user.password+"' WHERE id='"+user.id+"';";
+	let query = "UPDATE ERP.users SET password='"+user.password+"' WHERE id='"+user.id+"';";
 	return db(query);
 };
 
 User.updateInfo = (user) => {
 	if(user.email && user.birth){
-		var query = "UPDATE lfsdb.users SET email='"+user.email+"', birth='"+user.birth+"' WHERE id='"+user.id+"';";
+		var query = "UPDATE ERP.users SET email='"+user.email+"', birth='"+user.birth+"' WHERE id='"+user.id+"';";
 	} else if(user.email && !user.birth){
-		var query = "UPDATE lfsdb.users SET email='"+user.email+"' WHERE id='"+user.id+"';";
+		var query = "UPDATE ERP.users SET email='"+user.email+"' WHERE id='"+user.id+"';";
 	} else if(!user.email && user.birth){
-		var query = "UPDATE lfsdb.users SET birth='"+user.birth+"' WHERE id='"+user.id+"';";
+		var query = "UPDATE ERP.users SET birth='"+user.birth+"' WHERE id='"+user.id+"';";
 	};
 	return db(query);
 };
 
 User.supportConnect = (id) => {
-	let query = "UPDATE lfsdb.users SET support='connected' WHERE id='"+id+"';";
+	let query = "UPDATE ERP.users SET support='connected' WHERE id='"+id+"';";
 	return db(query);
 };
 
 User.supportDisconnect = (id) => {
-	let query = "UPDATE lfsdb.users SET support='disconnected' WHERE id='"+id+"';";
+	let query = "UPDATE ERP.users SET support='disconnected' WHERE id='"+id+"';";
 	return db(query);
 };
 
@@ -72,12 +72,12 @@ User.loadMessages = (room) => {
 };
 
 User.openServiceDeskCall = (id) => {
-	let query = "UPDATE lfsdb.users SET serviceDesk='opened' WHERE id='"+id+"';";
+	let query = "UPDATE ERP.users SET serviceDesk='opened' WHERE id='"+id+"';";
 	return db(query);
 };
 
 User.closeServiceDeskCall = (room) => {
-	let query = "UPDATE lfsdb.users SET serviceDesk='closed' WHERE id='"+room+"';";
+	let query = "UPDATE ERP.users SET serviceDesk='closed' WHERE id='"+room+"';";
 	return db(query);
 };
 

@@ -13,13 +13,13 @@
 			<div class="container">
                 <div class="box-1">
                 	<div class="box-1">
-                		<input type="text" class="btn-generic-big" id="store-sale-customer-cpf" placeholder="CPF">
-                		<input type="date" class="btn-generic-big" id="store-sale-date">
-                		<input type="button" class="btn-generic-big" id="store-sale-filter-btn" value="buscar">
+                		<input type="text" class="btn-generic-big" id="store-order-customer-cpf" placeholder="CPF">
+                		<input type="date" class="btn-generic-big" id="store-order-date">
+                		<input type="button" class="btn-generic-big" id="store-order-filter-btn" value="buscar">
                 	</div>
                 </div>
-                <div class="box-1" id="main-sale-div" style="display:none">
-                    <table class="tbl-info" id="main-sale-tbl">
+                <div class="box-1" id="main-order-div" style="display:none">
+                    <table class="tbl-info" id="main-order-tbl">
                         <tr>
                             <td>Cód</td>
                             <td>Data</td>
@@ -28,16 +28,16 @@
                             <td>Valor</td>
                             <td>Status</td>
                         </tr>
-                        <tbody id="main-sale-tbl-tbody"></tbody>  
+                        <tbody id="main-order-tbl-tbody"></tbody>  
                     </table>
                     <br>
-                    <button id="salePrevious" autocomplete="off" disabled>&lsaquo;&lsaquo;</button>
-                    <span id="salePageNumber"></span>
-                    <button id="saleNext" autocomplete="off" disabled>&rsaquo;&rsaquo;</button>
+                    <button id="orderPrevious" autocomplete="off" disabled>&lsaquo;&lsaquo;</button>
+                    <span id="orderPageNumber"></span>
+                    <button id="orderNext" autocomplete="off" disabled>&rsaquo;&rsaquo;</button>
                 </div>
-                <div class="box-1" id="sale-show-box" style="display:none;">
-                    <table class="tbl-info" id="sale-show-tbl">
-                        <tbody id="sale-show-tbody"></tbody>
+                <div class="box-1" id="order-show-box" style="display:none;">
+                    <table class="tbl-info" id="order-show-tbl">
+                        <tbody id="order-show-tbody"></tbody>
                     </table>
                 </div>
 			</div>

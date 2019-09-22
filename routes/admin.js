@@ -4,6 +4,7 @@ const adminController = require('../app/controller/admin');
 
 router.get('/', adminController.index);
 router.post('/updateUserAccess', adminController.updateUserAccess);
+router.post('/createFactory', adminController.createFactory);
 // router.get('/support', adminController.support);
 // router.post('/supportChat', adminController.supportChat);
 

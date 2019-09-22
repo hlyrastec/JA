@@ -1,0 +1,69 @@
+<html>
+	<head>
+        <% include ../../partials/head %>
+	</head>
+	<body>
+		<header>
+			<a href="/"><img src="/images/favicon.png" class="favicon"></a>
+			<div>
+    			<a onclick="let r = confirm('deseja sair?');if(r==true){window.location.href='/logout'}">Sair</a>
+			</div>
+		</header>
+		<section>
+			<div class="container">
+				<div class="box-2">
+					<div class="menu-box">
+                        <strong class="span-menu underline-title" onclick="window.location.href='/factory/storage/insert'">Entrada de produtos</strong>
+                    </div>
+				</div>
+				<div class="box-2">
+					<div class="menu-box">
+                        <strong class="span-menu underline-title" onclick="window.location.href='/factory/storage/withdraw'">Saída de produtos</strong>
+                    </div>
+				</div>
+				<div class="box-1">
+					<button class="btn-generic-big" onclick="displayProductFilterForm('factory-product-filter-form', 'factory-storage')">Produtos cadastrados</button>
+					<form id="factory-product-filter-form" class="box-1" style="display:none">
+						<input type="hidden" name="product_location" value="factory-storage">
+						<input type="text" name="product_cod" class="btn-generic-small" placeholder="Cód" autocomplete="off">
+						<select name="product_category" id="product-factory-storage-category" class="btn-generic-small" autocomplete="off">
+							<option value="">Categoria</option>
+						</select>
+						<select name="product_color" id="product-factory-storage-color" class="btn-generic-small" autocomplete="off">
+							<option value="">Cor</option>
+						</select>
+						<input type="submit" class="btn-generic-small" value="Filtrar">
+					</form>
+					<div id="factory-storage-product-div" style="display:none">
+						<table class="tbl-info" id="factory-storage-product-tbl"></table>
+						<br>
+						<button id="factory-storageProductPrevious" autocomplete="off" disabled>&lsaquo;&lsaquo;</button>
+	                    <span id="factory-storageProductPageNumber"></span>
+	                    <button id="factory-storageProductNext" autocomplete="off" disabled>&rsaquo;&rsaquo;</button>
+					</div>
+				</div>
+				<div class="box-1" id="product-show-box" style="display:none;">
+					<table class="tbl-info" id="product-show-tbl">
+						<tr>
+							<td>Cód</td>
+							<td>Tipo</td>
+							<td>Nome</td>
+							<td>Tamanho</td>
+							<td>Cor</td>
+							<td>Qtd</td>
+							<td>Valor</td>
+						</tr>
+						<tbody id="product-show-tbody"></tbody>
+					</table>
+					<div class="box-1" id="product-image-show"></div>
+					<button id="imagePrevious" autocomplete="off" disabled>&lsaquo;&lsaquo;</button>
+				    <span id="imagePageNumber"></span>
+				    <button id="imageNext" autocomplete="off" disabled>&rsaquo;&rsaquo;</button>
+				</div>
+			</div>
+		</section>
+	</body>
+	<footer>
+        <% include ../../partials/footer %>
+	</footer>
+</html>

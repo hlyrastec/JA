@@ -6,8 +6,7 @@ const pool  = mysql.createPool({
 	host : dbconfig.connection.host,
 	port : dbconfig.connection.port,
 	user : dbconfig.connection.user,
-	password : dbconfig.connection.password,
-	database : dbconfig.database
+	password : dbconfig.connection.password
 });
 
 const db = async (query) => {
@@ -26,6 +25,6 @@ const db = async (query) => {
 	});
 };
 
-db("UPDATE lfsdb.users set support='disconnected'");
+db("UPDATE ERP.users set support='disconnected'");
 
 module.exports = db;
