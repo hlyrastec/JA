@@ -25,6 +25,6 @@ const db = async (query) => {
 	});
 };
 
-db("UPDATE ERP.users set support='disconnected'");
+db("UPDATE erp.users set support='disconnected'");
 
 module.exports = db;

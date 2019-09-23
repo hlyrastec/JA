@@ -5,12 +5,16 @@ const Jobs = [
 		code: 'spt'	
 	},
 	{
+		name: 'Gerente Geral',
+		code: 'grg'
+	},
+	{
 		name: 'Gerente Fábrica',
 		code: 'grf'
 	},
 	{
-		name: 'Gerente Loja',
-		code: 'grl'
+		name: 'Gerente Costura',
+		code: 'grc'
 	},
 	{
 		name: 'Coordernador',
@@ -29,11 +33,11 @@ const Jobs = [
 		code: 'vde'
 	},
 	{
-		name: 'Estoquista',
+		name: 'Estoquista fábrica',
 		code: 'etf'
 	},
 	{
-		name: 'Estoquista',
+		name: 'Estoquista Loja',
 		code: 'etl'
 	},
 	{

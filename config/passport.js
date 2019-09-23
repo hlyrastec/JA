@@ -9,7 +9,7 @@ passport.serializeUser(async (user, done) => {
 });
 
 passport.deserializeUser(async (id, done) => {
-    const query = "SELECT * FROM ERP.users WHERE id='"+id+"';";
+    const query = "SELECT * FROM erp.users WHERE id='"+id+"';";
     let user = await db(query);
     done(null, user[0]);
 });
@@ -22,7 +22,7 @@ passport.use(
         passReqToCallback : true
     },
     async (req, username, password, done) => {
-        const query = "SELECT * FROM ERP.users WHERE username='"+username+"' OR email='"+req.body.email+"';";
+        const query = "SELECT * FROM erp.users WHERE username='"+username+"' OR email='"+req.body.email+"';";
         let users = await db(query);
         
         if (users.length) {
@@ -42,7 +42,7 @@ passport.use(
                 newUserMysql.birth = "";
             };
             
-            const insertQuery = "INSERT INTO ERP.users ( name, email, username, password, birth ) values ('"+newUserMysql.name+"', '"+newUserMysql.email+"', '"+newUserMysql.username+"', '"+newUserMysql.password+"', '"+newUserMysql.birth+"')";
+            const insertQuery = "INSERT INTO erp.users ( name, email, username, password, birth ) values ('"+newUserMysql.name+"', '"+newUserMysql.email+"', '"+newUserMysql.username+"', '"+newUserMysql.password+"', '"+newUserMysql.birth+"')";
             let result = await db(insertQuery);
             newUserMysql.id = result.insertId;
             
@@ -63,7 +63,7 @@ passport.use(
         passReqToCallback : true
     },
     async (req, username, password, done) => {
-        const query = "SELECT * FROM ERP.users WHERE username = '"+username+"';";
+        const query = "SELECT * FROM erp.users WHERE username = '"+username+"';";
         let users = await db(query);
         
         if (!users.length){

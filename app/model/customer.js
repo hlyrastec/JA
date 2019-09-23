@@ -8,7 +8,7 @@ const Customer = function(){
 };
 
 Customer.save = async (customer) => {
-	let query = "INSERT INTO ERP.customer (name, cpf, phone) VALUES ('"
+	let query = "INSERT INTO erp.customer (name, cpf, phone) VALUES ('"
 		+customer.name+"','"
 		+customer.cpf+"','"
 		+customer.phone+"');";
@@ -17,12 +17,12 @@ Customer.save = async (customer) => {
 };
 
 Customer.findById = async (id) => {
-	let query = "SELECT * FROM ERP.customer WHERE id='"+id+"';";
+	let query = "SELECT * FROM erp.customer WHERE id='"+id+"';";
 	return db(query);
 };
 
 Customer.findByCpf = async (cpf) => {
-	let query = "SELECT * FROM ERP.customer WHERE cpf='"+cpf+"';";
+	let query = "SELECT * FROM erp.customer WHERE cpf='"+cpf+"';";
 	return db(query);
 };
 

@@ -7,7 +7,7 @@ const Factory = function(){
 };
 
 Factory.save = async (factory) => {
-	let query = "INSERT INTO ERP.factory (city, state) VALUES ('"
+	let query = "INSERT INTO erp.factory (city, state) VALUES ('"
 		+factory.city+"', '"
 		+factory.state+"');";
 	return db(query);

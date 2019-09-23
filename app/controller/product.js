@@ -1,5 +1,6 @@
 const userController = require('./user');
 const Product = require('../model/product');
+const Storage = require('../model/factory/storage');
 const Jobs = require('../model/job');
 
 const productController = {
@@ -54,7 +55,15 @@ const productController = {
 
 		let newProduct = await Product.findById(row.insertId);
 
-		await Storage.save({factory_id:1,product_id:row.insertId,amount:0});
+		let insertion = {
+			factory_id: 1,
+			product_id: row.insertId,
+			amount: 0
+		};
+
+		console.log(insertion);
+
+		await Storage.save(insertion);
 
 		res.send({ done: 'Produto cadastrado com sucesso!', product: newProduct });
 	},
