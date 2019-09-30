@@ -3,7 +3,7 @@ const session  = require('express-session');
 const path = require('path');
 
 const app = express();
-const server = require('http').createServer(app);
+// const server = require('http').createServer(app);
 // const io = require('socket.io')(server);
 
 // require('./config/socketio')(io);
@@ -40,12 +40,8 @@ const routes = require('./routes/index');
 
 app.use('/', routes);
 
-app.use(function(req, res, next) {
+app.use((req, res, next) => {
   res.render('error');
 });
 
-var port = process.env.PORT || 3000;
-
-server.listen(port, () => {
-	console.log('beta - 0.0.1');
-});
+module.exports = app;

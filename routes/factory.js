@@ -14,8 +14,8 @@ router.get('/', userController.verify, (req, res) => {
 router.get('/storage', storageController.index);
 router.get('/storage/insert', storageController.insert);
 router.get('/storage/withdraw', storageController.withdraw);
-router.post('/storage/increaseAmount', storageController.increaseAmount)
-router.post('/storage/decreaseAmount', storageController.decreaseAmount)
+router.post('/storage/increaseAmount', storageController.increaseAmount);
+router.post('/storage/decreaseAmount', storageController.decreaseAmount);
 router.post('/storage/filter', storageController.filter);
 
 module.exports = router;
